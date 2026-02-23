@@ -328,15 +328,7 @@ button {
   color: var(--color-black);
 }
 
-.nav-list li a.active::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--color-accent);
-}
+/* Active underline handled in animations section below */
 
 /* --- Mobile nav overlay --- */
 .mobile-nav-overlay {
@@ -922,6 +914,656 @@ button {
 }
 
 /* ============================================
+   WHAT'S NEWS (WSJ Signature Section)
+   ============================================ */
+.whats-news-section {
+  padding: var(--spacing-xl) 0;
+  border-bottom: 1px solid var(--color-light-gray);
+  background: var(--color-cream);
+}
+
+.whats-news-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+
+.whats-news-col {
+  padding-right: var(--spacing-xl);
+  border-right: 1px solid var(--color-light-gray);
+}
+
+.whats-news-col:last-child {
+  padding-right: 0;
+  border-right: none;
+  padding-left: var(--spacing-xl);
+}
+
+.whats-news-heading {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.whats-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.whats-news-list li {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px dotted var(--color-light-gray);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--color-dark-gray);
+}
+
+.whats-news-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.whats-news-list li a {
+  color: var(--color-dark-gray);
+  transition: color 0.2s;
+}
+
+.whats-news-list li a:hover {
+  color: var(--color-black);
+}
+
+.whats-news-list li strong {
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+/* ============================================
+   PODCAST / SHOWS SECTION (Daily Wire Influence)
+   ============================================ */
+.podcast-section {
+  padding: var(--spacing-xl) 0;
+  border-bottom: 1px solid var(--color-light-gray);
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.podcast-section .section-header {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.podcast-section .section-header h2 {
+  color: var(--color-white);
+}
+
+.podcast-section .section-header .see-all {
+  color: var(--color-accent-light);
+}
+
+.podcast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+.podcast-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-navy-light);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.podcast-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.podcast-artwork {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #1a2744 0%, #b8860b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.podcast-artwork--alt {
+  background: linear-gradient(135deg, #2c3e5a 0%, #8b6508 100%);
+}
+
+.podcast-artwork--third {
+  background: linear-gradient(135deg, #111111 0%, #1a2744 50%, #b8860b 100%);
+}
+
+.podcast-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--color-white);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.podcast-card:hover .podcast-play-btn {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.1);
+}
+
+.podcast-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--color-red);
+  color: var(--color-white);
+  padding: 2px 10px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 2px;
+}
+
+.podcast-info {
+  padding: var(--spacing-md);
+}
+
+.podcast-info .label {
+  color: var(--color-accent-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.podcast-info h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-white);
+}
+
+.podcast-info h3 a {
+  color: var(--color-white);
+}
+
+.podcast-info h3 a:hover {
+  color: var(--color-accent-light);
+}
+
+.podcast-info p {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-sm);
+}
+
+.podcast-meta {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* ============================================
+   VERSE OF THE DAY
+   ============================================ */
+.verse-of-day {
+  padding: var(--spacing-2xl) 0;
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.verse-of-day-inner {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  border-top: 3px solid var(--color-accent);
+  border-bottom: 3px solid var(--color-accent);
+}
+
+.verse-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--spacing-md);
+}
+
+.verse-text {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-md);
+}
+
+.verse-ref {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* ============================================
+   SUBSCRIBE PAGE — Testimonials & FAQ
+   ============================================ */
+.testimonials-section {
+  padding: var(--spacing-3xl) 0;
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.testimonials-section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.testimonials-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.testimonial-item {
+  border-left: 4px solid var(--color-accent);
+  padding-left: var(--spacing-lg);
+  margin: 0;
+}
+
+.testimonial-item p {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: var(--spacing-sm);
+}
+
+.testimonial-item cite {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-style: normal;
+}
+
+.faq-section {
+  padding: var(--spacing-3xl) 0;
+}
+
+.faq-section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.faq-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--spacing-lg) 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-black);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.faq-question:hover {
+  color: var(--color-accent);
+}
+
+.faq-question .faq-icon {
+  font-size: 1.25rem;
+  font-weight: 300;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+  margin-left: var(--spacing-md);
+}
+
+.faq-item.open .faq-question .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding-bottom: var(--spacing-lg);
+}
+
+.faq-answer p {
+  font-size: 0.9375rem;
+  color: var(--color-dark-gray);
+  line-height: 1.6;
+}
+
+/* ============================================
+   MERCH PAGE — Subscriber Discount Banner
+   ============================================ */
+.merch-discount-banner {
+  background: var(--color-navy);
+  color: var(--color-white);
+  padding: var(--spacing-2xl) 0;
+  text-align: center;
+}
+
+.merch-discount-banner h2 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.merch-discount-banner p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--spacing-lg);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.annual-plans-link {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.annual-plans-link:hover {
+  color: var(--color-accent-light);
+}
+
+/* ============================================
+   CATEGORY PAGE — Sidebar Widgets
+   ============================================ */
+.sidebar-widget-text {
+  font-size: 0.875rem;
+  color: var(--color-dark-gray);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+.sidebar-support-widget {
+  background: var(--color-cream);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-light-gray);
+}
+
+.sidebar-support-widget h3 {
+  border: none;
+  margin-bottom: var(--spacing-sm);
+}
+
+.sidebar-support-widget p {
+  font-size: 0.875rem;
+  color: var(--color-dark-gray);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+.sidebar-newsletter-form {
+  flex-direction: column;
+}
+
+.sidebar-newsletter-btn {
+  width: 100%;
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+body.dark-mode {
+  --color-black: #e8e6e1;
+  --color-white: #1a1a1a;
+  --color-cream: #222222;
+  --color-light-gray: #333333;
+  --color-medium-gray: #888888;
+  --color-dark-gray: #bbbbbb;
+  --color-navy: #0d1520;
+  --color-navy-light: #1a2744;
+}
+
+body.dark-mode .site-header {
+  border-bottom-color: var(--color-light-gray);
+}
+
+body.dark-mode .breaking-bar {
+  background: #0d1520;
+}
+
+body.dark-mode .site-logo h1 a,
+body.dark-mode .site-logo h1 a:hover {
+  color: var(--color-black);
+}
+
+body.dark-mode .feature-image .image-placeholder,
+body.dark-mode .article-card .card-image .image-placeholder {
+  background: linear-gradient(135deg, #333, #444);
+  color: #666;
+}
+
+body.dark-mode .paywall-overlay .fade-out {
+  background: linear-gradient(to bottom, transparent, var(--color-white));
+}
+
+body.dark-mode .podcast-section {
+  background: #0d1520;
+}
+
+body.dark-mode .podcast-card {
+  background: #1a2744;
+}
+
+body.dark-mode .whats-news-section {
+  background: var(--color-cream);
+}
+
+body.dark-mode .verse-of-day-inner {
+  border-color: var(--color-accent-dark);
+}
+
+body.dark-mode .newsletter-cta {
+  background: var(--color-cream);
+  border-color: var(--color-light-gray);
+}
+
+body.dark-mode .site-footer {
+  background: #0d1520;
+}
+
+body.dark-mode .product-image {
+  background: #2a2a2a;
+}
+
+body.dark-mode .subscribe-benefits {
+  background: var(--color-cream);
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: 1px solid var(--color-light-gray);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  color: var(--color-dark-gray);
+}
+
+.dark-mode-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ============================================
+   ANIMATIONS & MICRO-INTERACTIONS
+   ============================================ */
+/* Breaking news ticker */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.breaking-bar .breaking-ticker {
+  display: flex;
+  animation: ticker 30s linear infinite;
+}
+
+.breaking-bar .breaking-ticker:hover {
+  animation-play-state: paused;
+}
+
+.breaking-ticker-item {
+  white-space: nowrap;
+  padding-right: var(--spacing-2xl);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.breaking-ticker-item::after {
+  content: "\2022";
+  color: var(--color-accent-light);
+}
+
+.breaking-ticker-item:last-child::after {
+  content: none;
+}
+
+/* Fade in on scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+}
+
+.animate-on-scroll.visible {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Hover lifts */
+.article-card {
+  transition: transform 0.2s;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+}
+
+.story-card--small h3 a,
+.article-card h3 a,
+.opinion-card h3 a,
+.opinion-list-item h4 a,
+.most-read-item h4 a {
+  transition: color 0.2s;
+}
+
+.story-card--small h3 a:hover,
+.article-card h3 a:hover,
+.opinion-card h3 a:hover,
+.opinion-list-item h4 a:hover,
+.most-read-item h4 a:hover {
+  color: var(--color-accent);
+}
+
+/* Smooth underline animation */
+.nav-list li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: var(--color-accent);
+  transition: left 0.2s, right 0.2s;
+}
+
+.nav-list li a:hover::after,
+.nav-list li a.active::after {
+  left: 0;
+  right: 0;
+}
+
+/* Header shadow transition */
+.site-header {
+  transition: box-shadow 0.3s;
+}
+
+/* Button press effect */
+.btn-subscribe:active,
+.btn-pricing:active,
+.btn-add-cart:active,
+.filter-btn:active {
+  transform: scale(0.97);
+}
+
+/* Newsletter input focus glow */
+.newsletter-form input:focus {
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+}
+
+/* ============================================
    ARTICLE PAGE
    ============================================ */
 .article-page {
@@ -1337,6 +1979,13 @@ button {
 }
 
 /* Subscription benefits */
+.subscribe-section-title {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
 .subscribe-benefits {
   background: var(--color-cream);
   padding: var(--spacing-3xl) 0;
@@ -1667,6 +2316,14 @@ button {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .podcast-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .podcast-card:last-child {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1784,6 +2441,52 @@ button {
 
   .opinion-main .opinion-feature {
     grid-template-columns: 1fr;
+  }
+
+  /* New section responsive */
+  .whats-news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .whats-news-col {
+    padding-right: 0;
+    border-right: none;
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px dotted var(--color-light-gray);
+  }
+
+  .whats-news-col:last-child {
+    padding-left: 0;
+    border-bottom: none;
+  }
+
+  .podcast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .podcast-card:last-child {
+    display: flex;
+  }
+
+  .podcast-card {
+    flex-direction: row;
+  }
+
+  .podcast-artwork {
+    width: 140px;
+    min-height: 120px;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+  }
+
+  .podcast-play-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .verse-text {
+    font-size: 1.25rem;
   }
 }
 

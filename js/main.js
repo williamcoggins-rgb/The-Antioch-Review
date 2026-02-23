@@ -166,6 +166,65 @@
     });
   }
 
+  // --- Dark mode toggle ---
+  function initDarkMode() {
+    var toggle = document.getElementById("darkModeToggle");
+    if (!toggle) return;
+
+    // Check saved preference
+    var savedMode = localStorage.getItem("antioch-dark-mode");
+    if (savedMode === "true") {
+      document.body.classList.add("dark-mode");
+      toggle.innerHTML = "&#9788;"; // Sun icon
+    }
+
+    toggle.addEventListener("click", function () {
+      document.body.classList.toggle("dark-mode");
+      var isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("antioch-dark-mode", isDark);
+      toggle.innerHTML = isDark ? "&#9788;" : "&#9789;"; // Sun or Moon
+    });
+  }
+
+  // --- FAQ accordion ---
+  function initFAQ() {
+    var faqItems = document.querySelectorAll(".faq-item");
+    if (!faqItems.length) return;
+
+    faqItems.forEach(function (item) {
+      var question = item.querySelector(".faq-question");
+      if (!question) return;
+
+      question.addEventListener("click", function () {
+        // Close other items
+        faqItems.forEach(function (other) {
+          if (other !== item) other.classList.remove("open");
+        });
+        // Toggle current
+        item.classList.toggle("open");
+      });
+    });
+  }
+
+  // --- Scroll animations ---
+  function initScrollAnimations() {
+    var elements = document.querySelectorAll(".animate-on-scroll");
+    if (!elements.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    elements.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
   // --- Initialize everything ---
   document.addEventListener("DOMContentLoaded", function () {
     setHeaderDate();
@@ -175,5 +234,8 @@
     initStickyHeader();
     initNewsletter();
     setActiveNav();
+    initDarkMode();
+    initFAQ();
+    initScrollAnimations();
   });
 })();

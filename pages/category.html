@@ -24,6 +24,7 @@
         <div class="logo-tagline">Truth. Faith. Clarity.</div>
       </div>
       <div class="header-right">
+        <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9789;</button>
         <button class="header-search" id="searchToggle" aria-label="Search">&#128269;</button>
         <a href="subscribe.html" class="btn-subscribe">Subscribe</a>
         <a href="#" class="btn-sign-in">Sign In</a>
@@ -177,17 +178,17 @@
             <!-- Newsletter widget -->
             <div class="sidebar-widget">
               <h3>Daily Briefing</h3>
-              <p style="font-size:0.875rem;color:#555;line-height:1.5;margin-bottom:16px;">Get the day's top faith stories delivered to your inbox every morning.</p>
-              <form class="newsletter-form" style="flex-direction:column;" onsubmit="return false;">
+              <p class="sidebar-widget-text">Get the day's top faith stories delivered to your inbox every morning.</p>
+              <form class="newsletter-form sidebar-newsletter-form" onsubmit="return false;">
                 <input type="email" placeholder="Your email address" required>
-                <button type="submit" style="width:100%;">Subscribe Free</button>
+                <button type="submit" class="sidebar-newsletter-btn">Subscribe Free</button>
               </form>
             </div>
 
             <!-- Subscribe widget -->
-            <div class="sidebar-widget" style="background:#f8f6f1;padding:24px;border:1px solid #e9e5df;">
-              <h3 style="border:none;margin-bottom:8px;">Support Our Mission</h3>
-              <p style="font-size:0.875rem;color:#555;line-height:1.5;margin-bottom:16px;">Help fund independent Christian journalism that speaks truth without compromise.</p>
+            <div class="sidebar-widget sidebar-support-widget">
+              <h3>Support Our Mission</h3>
+              <p>Help fund independent Christian journalism that speaks truth without compromise.</p>
               <a href="subscribe.html" class="btn-subscribe" style="display:block;text-align:center;">Subscribe Now</a>
             </div>
           </aside>

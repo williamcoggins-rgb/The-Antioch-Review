@@ -24,6 +24,7 @@
         <div class="logo-tagline">Truth. Faith. Clarity.</div>
       </div>
       <div class="header-right">
+        <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9789;</button>
         <button class="header-search" id="searchToggle" aria-label="Search">&#128269;</button>
         <a href="#" class="btn-sign-in">Sign In</a>
       </div>
@@ -128,7 +129,7 @@
 
         <!-- Annual option -->
         <div style="text-align:center;margin-bottom:48px;">
-          <p style="color:#555;font-size:1rem;">Save 20% with an annual subscription. <a href="#" style="color:#b8860b;font-weight:600;">See annual plans &rarr;</a></p>
+          <p style="color:var(--color-dark-gray);font-size:1rem;">Save 20% with an annual subscription. <a href="#" class="annual-plans-link">See annual plans &rarr;</a></p>
         </div>
       </div>
     </section>
@@ -136,7 +137,7 @@
     <!-- Benefits Section -->
     <section class="subscribe-benefits">
       <div class="container">
-        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">Why Subscribe to The Antioch Review?</h2>
+        <h2 class="subscribe-section-title">Why Subscribe to The Antioch Review?</h2>
         <div class="benefits-grid">
           <div class="benefit-card">
             <div class="benefit-icon">&#9769;</div>
@@ -158,58 +159,85 @@
     </section>
 
     <!-- Testimonials -->
-    <section style="padding:64px 0;border-bottom:1px solid #e9e5df;">
-      <div class="container" style="max-width:800px;">
-        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">What Subscribers Are Saying</h2>
+    <section class="testimonials-section">
+      <div class="container">
+        <h2>What Subscribers Are Saying</h2>
+        <div class="testimonials-container">
+          <div class="testimonials-list">
+            <blockquote class="testimonial-item">
+              <p>"The Antioch Review has become my go-to source for news. It's the only publication I trust to tell me what's actually happening in the world through a lens that honors Christ."</p>
+              <cite>— Pastor Michael T., Dallas, TX</cite>
+            </blockquote>
 
-        <div style="display:flex;flex-direction:column;gap:32px;">
-          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
-            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"The Antioch Review has become my go-to source for news. It's the only publication I trust to tell me what's actually happening in the world through a lens that honors Christ."</p>
-            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Pastor Michael T., Dallas, TX</cite>
-          </blockquote>
+            <blockquote class="testimonial-item">
+              <p>"I cancelled my mainstream news subscriptions and replaced them with The Antioch Review. The depth of theological insight combined with real journalism is exactly what the church needs."</p>
+              <cite>— Rebecca S., Nashville, TN</cite>
+            </blockquote>
 
-          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
-            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"I cancelled my mainstream news subscriptions and replaced them with The Antioch Review. The depth of theological insight combined with real journalism is exactly what the church needs."</p>
-            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Rebecca S., Nashville, TN</cite>
-          </blockquote>
-
-          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
-            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"My small group reads the weekly briefing together before we study. It's sparked some of our best conversations about how to live faithfully in this cultural moment."</p>
-            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Karen J., Grand Rapids, MI</cite>
-          </blockquote>
+            <blockquote class="testimonial-item">
+              <p>"My small group reads the weekly briefing together before we study. It's sparked some of our best conversations about how to live faithfully in this cultural moment."</p>
+              <cite>— Karen J., Grand Rapids, MI</cite>
+            </blockquote>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section style="padding:64px 0;">
-      <div class="container" style="max-width:700px;">
-        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">Frequently Asked Questions</h2>
+    <section class="faq-section">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">
+                Can I cancel my subscription at any time?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Yes. All subscriptions are month-to-month unless you choose an annual plan. You can cancel at any time from your account settings, and you'll continue to have access through the end of your billing period.</p>
+              </div>
+            </div>
 
-        <div style="display:flex;flex-direction:column;gap:24px;">
-          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
-            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Can I cancel my subscription at any time?</h3>
-            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Yes. All subscriptions are month-to-month unless you choose an annual plan. You can cancel at any time from your account settings, and you'll continue to have access through the end of your billing period.</p>
-          </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                Do you offer student or ministry discounts?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Yes. We offer 50% off for seminary students and active ministry workers. Contact us at subscriptions@theantiochreview.com with verification of your status.</p>
+              </div>
+            </div>
 
-          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
-            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Do you offer student or ministry discounts?</h3>
-            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Yes. We offer 50% off for seminary students and active ministry workers. Contact us at subscriptions@theantiochreview.com with verification of your status.</p>
-          </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                Can I gift a subscription?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Patron-tier subscribers can gift one free subscription per year. All tiers can purchase gift subscriptions at any time through our gift page.</p>
+              </div>
+            </div>
 
-          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
-            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Can I gift a subscription?</h3>
-            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Patron-tier subscribers can gift one free subscription per year. All tiers can purchase gift subscriptions at any time through our gift page.</p>
-          </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                How is The Antioch Review funded?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>We are primarily funded by our subscribers. We accept limited advertising that aligns with our values, but subscriber support is the backbone of our operation. This keeps our journalism independent and accountable to you, our readers.</p>
+              </div>
+            </div>
 
-          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
-            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">How is The Antioch Review funded?</h3>
-            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">We are primarily funded by our subscribers. We accept limited advertising that aligns with our values, but subscriber support is the backbone of our operation. This keeps our journalism independent and accountable to you, our readers.</p>
-          </div>
-
-          <div>
-            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">What denominations does The Antioch Review represent?</h3>
-            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">We are an interdenominational publication rooted in historic, orthodox Christianity. Our team and contributors come from a variety of Protestant and Catholic traditions, united by a commitment to the authority of Scripture and the centrality of Christ.</p>
+            <div class="faq-item">
+              <button class="faq-question">
+                What denominations does The Antioch Review represent?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>We are an interdenominational publication rooted in historic, orthodox Christianity. Our team and contributors come from a variety of Protestant and Catholic traditions, united by a commitment to the authority of Scripture and the centrality of Christ.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
