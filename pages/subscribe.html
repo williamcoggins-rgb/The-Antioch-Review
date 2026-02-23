@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribe — The Antioch Review</title>
+  <meta name="description" content="Subscribe to The Antioch Review for unlimited access to Christian news, commentary, and exclusive content.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="header-top">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu">&#9776;</button>
+        <span class="header-date" id="headerDate"></span>
+      </div>
+      <div class="site-logo">
+        <h1><a href="../index.html">The Antioch Review</a></h1>
+        <div class="logo-tagline">Truth. Faith. Clarity.</div>
+      </div>
+      <div class="header-right">
+        <button class="header-search" id="searchToggle" aria-label="Search">&#128269;</button>
+        <a href="#" class="btn-sign-in">Sign In</a>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <ul class="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="category.html?cat=faith">Faith</a></li>
+        <li><a href="category.html?cat=politics">Politics</a></li>
+        <li><a href="category.html?cat=culture">Culture</a></li>
+        <li><a href="category.html?cat=world">World</a></li>
+        <li><a href="category.html?cat=opinion">Opinion</a></li>
+        <li><a href="category.html?cat=theology">Theology</a></li>
+        <li><a href="category.html?cat=church">Church</a></li>
+        <li><a href="merch.html">Merch</a></li>
+        <li><a href="subscribe.html" class="active">Subscribe</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <nav class="mobile-nav" id="mobileNav">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="mobile-nav-links">
+        <a href="../index.html">Home</a>
+        <a href="category.html?cat=faith">Faith</a>
+        <a href="category.html?cat=politics">Politics</a>
+        <a href="category.html?cat=culture">Culture</a>
+        <a href="category.html?cat=world">World</a>
+        <a href="category.html?cat=opinion">Opinion</a>
+        <a href="category.html?cat=theology">Theology</a>
+        <a href="category.html?cat=church">Church</a>
+        <a href="merch.html">Merch</a>
+        <a href="subscribe.html">Subscribe</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ========== SUBSCRIBE PAGE ========== -->
+  <main>
+    <section class="subscribe-page">
+      <div class="container">
+        <div class="subscribe-hero">
+          <h1>Support Journalism That Speaks Truth</h1>
+          <p>Join thousands of believers who rely on The Antioch Review for trustworthy Christian news, insightful commentary, and deep theological analysis. Your subscription makes this mission possible.</p>
+        </div>
+
+        <!-- Pricing Tiers -->
+        <div class="pricing-grid">
+
+          <!-- Tier 1: Digital -->
+          <div class="pricing-card">
+            <h3>Digital</h3>
+            <div class="pricing-price">$8<span>/mo</span></div>
+            <div class="pricing-period">Billed monthly &middot; Cancel anytime</div>
+            <ul class="pricing-features">
+              <li>Unlimited article access</li>
+              <li>Daily email briefing</li>
+              <li>Ad-reduced experience</li>
+              <li>Comment on articles</li>
+              <li>Access to article archives</li>
+            </ul>
+            <a href="#" class="btn-pricing">Get Started</a>
+          </div>
+
+          <!-- Tier 2: Premium (Featured) -->
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <h3>Premium</h3>
+            <div class="pricing-price">$14<span>/mo</span></div>
+            <div class="pricing-period">Billed monthly &middot; Cancel anytime</div>
+            <ul class="pricing-features">
+              <li>Everything in Digital</li>
+              <li>Exclusive weekly podcast</li>
+              <li>Subscriber-only articles</li>
+              <li>Early access to new features</li>
+              <li>10% off all merchandise</li>
+              <li>Monthly subscriber newsletter</li>
+            </ul>
+            <a href="#" class="btn-pricing">Get Started</a>
+          </div>
+
+          <!-- Tier 3: Patron -->
+          <div class="pricing-card">
+            <h3>Patron</h3>
+            <div class="pricing-price">$30<span>/mo</span></div>
+            <div class="pricing-period">Billed monthly &middot; Cancel anytime</div>
+            <ul class="pricing-features">
+              <li>Everything in Premium</li>
+              <li>Ad-free experience</li>
+              <li>Quarterly video Q&amp;A with editors</li>
+              <li>25% off all merchandise</li>
+              <li>Name listed on supporter page</li>
+              <li>Gift a subscription to a friend</li>
+            </ul>
+            <a href="#" class="btn-pricing">Get Started</a>
+          </div>
+
+        </div>
+
+        <!-- Annual option -->
+        <div style="text-align:center;margin-bottom:48px;">
+          <p style="color:#555;font-size:1rem;">Save 20% with an annual subscription. <a href="#" style="color:#b8860b;font-weight:600;">See annual plans &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="subscribe-benefits">
+      <div class="container">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">Why Subscribe to The Antioch Review?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">&#9769;</div>
+            <h3>Grounded in Scripture</h3>
+            <p>Every story we publish is filtered through a biblical worldview. We don't chase clicks — we pursue truth, because truth matters to God and to His people.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">&#128240;</div>
+            <h3>Independent Journalism</h3>
+            <p>We're not beholden to any political party, denomination, or corporate interest. Your subscription funds journalism that answers to God and to our readers.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">&#127758;</div>
+            <h3>Global Perspective</h3>
+            <p>From the persecuted church in Asia to revival in Africa, we cover the full scope of what God is doing around the world — stories the mainstream media ignores.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="padding:64px 0;border-bottom:1px solid #e9e5df;">
+      <div class="container" style="max-width:800px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">What Subscribers Are Saying</h2>
+
+        <div style="display:flex;flex-direction:column;gap:32px;">
+          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
+            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"The Antioch Review has become my go-to source for news. It's the only publication I trust to tell me what's actually happening in the world through a lens that honors Christ."</p>
+            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Pastor Michael T., Dallas, TX</cite>
+          </blockquote>
+
+          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
+            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"I cancelled my mainstream news subscriptions and replaced them with The Antioch Review. The depth of theological insight combined with real journalism is exactly what the church needs."</p>
+            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Rebecca S., Nashville, TN</cite>
+          </blockquote>
+
+          <blockquote style="border-left:4px solid #b8860b;padding-left:24px;margin:0;">
+            <p style="font-family:'Playfair Display',serif;font-size:1.125rem;line-height:1.7;font-style:italic;margin-bottom:8px;">"My small group reads the weekly briefing together before we study. It's sparked some of our best conversations about how to live faithfully in this cultural moment."</p>
+            <cite style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#b8860b;font-weight:600;font-style:normal;">— Karen J., Grand Rapids, MI</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="padding:64px 0;">
+      <div class="container" style="max-width:700px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.75rem;text-align:center;margin-bottom:48px;">Frequently Asked Questions</h2>
+
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
+            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Can I cancel my subscription at any time?</h3>
+            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Yes. All subscriptions are month-to-month unless you choose an annual plan. You can cancel at any time from your account settings, and you'll continue to have access through the end of your billing period.</p>
+          </div>
+
+          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
+            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Do you offer student or ministry discounts?</h3>
+            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Yes. We offer 50% off for seminary students and active ministry workers. Contact us at subscriptions@theantiochreview.com with verification of your status.</p>
+          </div>
+
+          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
+            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">Can I gift a subscription?</h3>
+            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">Patron-tier subscribers can gift one free subscription per year. All tiers can purchase gift subscriptions at any time through our gift page.</p>
+          </div>
+
+          <div style="border-bottom:1px solid #e9e5df;padding-bottom:24px;">
+            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">How is The Antioch Review funded?</h3>
+            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">We are primarily funded by our subscribers. We accept limited advertising that aligns with our values, but subscriber support is the backbone of our operation. This keeps our journalism independent and accountable to you, our readers.</p>
+          </div>
+
+          <div>
+            <h3 style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:8px;">What denominations does The Antioch Review represent?</h3>
+            <p style="font-size:0.9375rem;color:#555;line-height:1.6;">We are an interdenominational publication rooted in historic, orthodox Christianity. Our team and contributors come from a variety of Protestant and Catholic traditions, united by a commitment to the authority of Scripture and the centrality of Christ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>The Antioch Review</h2>
+          <p>Trusted Christian journalism grounded in Scripture, committed to truth, and dedicated to equipping believers to engage the world with faith, wisdom, and courage.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Sections</h3>
+          <ul>
+            <li><a href="category.html?cat=faith">Faith</a></li>
+            <li><a href="category.html?cat=politics">Politics</a></li>
+            <li><a href="category.html?cat=culture">Culture</a></li>
+            <li><a href="category.html?cat=world">World</a></li>
+            <li><a href="category.html?cat=opinion">Opinion</a></li>
+            <li><a href="category.html?cat=theology">Theology</a></li>
+            <li><a href="category.html?cat=church">Church</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>More</h3>
+          <ul>
+            <li><a href="merch.html">Merch Store</a></li>
+            <li><a href="subscribe.html">Subscribe</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <ul>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Podcast</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Antioch Review. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
