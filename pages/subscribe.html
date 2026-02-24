@@ -7,7 +7,7 @@
   <meta name="description" content="Subscribe to The Antioch Review for unlimited access to Christian news, commentary, and exclusive content.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
@@ -335,12 +335,14 @@
     var squareCard = null;
     var squarePayments = null;
 
+    // Plan data
     var plans = {
       digital: { name: 'Digital', price: '$8/mo', amount: 800 },
       premium: { name: 'Premium', price: '$14/mo', amount: 1400 },
       patron: { name: 'Patron', price: '$30/mo', amount: 3000 }
     };
 
+    // Attach click handlers to pricing buttons
     document.querySelectorAll('.btn-pricing').forEach(function(btn, i) {
       var planKeys = ['digital', 'premium', 'patron'];
       btn.addEventListener('click', function(e) {
@@ -366,21 +368,25 @@
       document.getElementById('paymentModal').style.display = 'none';
     };
 
+    // Initialize Square Web Payments SDK
     async function initSquareCard() {
       var container = document.getElementById('card-container');
       container.innerHTML = '';
 
       try {
+        // Fetch Square config from our API
         var configRes = await fetch('/api/payments/config');
         var config = await configRes.json();
 
         if (!config.appId || config.appId === 'sandbox-sq0idb-DEMO') {
+          // Demo mode — show a demo card form
           container.innerHTML = '<div style="padding:8px;color:#6b7280;font-size:0.875rem;text-align:center;">' +
             '<p style="margin-bottom:8px;">&#128274; Demo mode — Square not configured</p>' +
             '<p style="font-size:0.75rem;">Payment will be recorded. Configure Square environment variables for live processing.</p></div>';
           return;
         }
 
+        // Load Square SDK if not already loaded
         if (!window.Square) {
           var script = document.createElement('script');
           script.src = config.environment === 'production'
@@ -406,6 +412,7 @@
       }
     }
 
+    // Handle payment form submit
     document.getElementById('paymentForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       var email = document.getElementById('paymentEmail').value;
@@ -422,6 +429,7 @@
       try {
         var sourceId = 'demo-nonce';
 
+        // If Square card is initialized, tokenize it
         if (squareCard) {
           var result = await squareCard.tokenize();
           if (result.status !== 'OK') {
@@ -430,6 +438,7 @@
           sourceId = result.token;
         }
 
+        // Send to our API
         var res = await fetch('/api/payments/process', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
