@@ -554,6 +554,37 @@ body {
 
 .panel:hover { border-color: var(--border-light); }
 
+/* Info Banner */
+.info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.info-banner-icon {
+  font-size: 1.25rem;
+  color: #60a5fa;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.info-banner-text {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.info-banner-text strong {
+  color: var(--text-primary);
+}
+
 .panel-header {
   display: flex;
   align-items: center;
