@@ -1,0 +1,10 @@
+{
+  "name": "the-antioch-review",
+  "version": "1.0.0",
+  "description": "The Antioch Review — Christian news, culture commentary, and faith-based analysis",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve . -l 3000",
+    "start": "npx serve ."
+  }
+}
