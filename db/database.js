@@ -83,11 +83,10 @@ function initTables() {
   const count = db.prepare('SELECT COUNT(*) as cnt FROM admin_users').get();
   if (count.cnt === 0) {
     const salt = crypto.randomBytes(16).toString('hex');
-    const hash = crypto.scryptSync('admin123', salt, 64).toString('hex');
+    const hash = crypto.scryptSync('Sanfred4926', salt, 64).toString('hex');
     db.prepare('INSERT INTO admin_users (username, password_hash, salt) VALUES (?, ?, ?)')
       .run('admin', hash, salt);
-    console.log('[DB] Default admin created — username: admin, password: admin123');
-    console.log('[DB] IMPORTANT: Change the default password immediately!');
+    console.log('[DB] Default admin created — username: admin');
   }
 }
 

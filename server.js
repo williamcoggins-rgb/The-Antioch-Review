@@ -639,9 +639,7 @@ server.listen(PORT, function() {
   console.log('  ║  Site:    http://localhost:' + PORT + '                  ║');
   console.log('  ║  Admin:   http://localhost:' + PORT + '/admin             ║');
   console.log('  ║                                                  ║');
-  console.log('  ║  Default admin login:                            ║');
-  console.log('  ║    Username: admin                               ║');
-  console.log('  ║    Password: admin123                            ║');
+  console.log('  ║  Admin login: username "admin"                    ║');
   console.log('  ║                                                  ║');
   console.log('  ║  Square payments: ' + (SQUARE_ACCESS_TOKEN ? 'CONFIGURED' : 'Demo mode    ') + '              ║');
   console.log('  ╚══════════════════════════════════════════════════╝');
