@@ -113,77 +113,223 @@
           <button class="btn btn-primary" onclick="showArticleForm()">+ New Article</button>
         </div>
 
-        <!-- Article Form (hidden by default) -->
-        <div class="panel" id="articleFormPanel" style="display:none;">
-          <div class="panel-header">
-            <h2 id="articleFormTitle">New Article</h2>
-            <button class="btn btn-outline btn-sm" onclick="hideArticleForm()">Cancel</button>
-          </div>
-          <div class="panel-body">
-            <form id="articleForm">
-              <input type="hidden" id="articleId">
-              <div class="form-group">
-                <label for="articleTitleInput">Title</label>
-                <input type="text" id="articleTitleInput" placeholder="Article title" required>
-              </div>
-              <div class="form-group">
-                <label for="articleSubtitle">Subtitle</label>
-                <input type="text" id="articleSubtitle" placeholder="Optional subtitle">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="articleAuthor">Author</label>
-                  <input type="text" id="articleAuthor" placeholder="Author name" required>
-                </div>
-                <div class="form-group">
-                  <label for="articleSection">Section</label>
-                  <select id="articleSection" required>
-                    <option value="">Select section...</option>
-                    <option value="faith">Faith</option>
-                    <option value="politics">Politics</option>
-                    <option value="culture">Culture</option>
-                    <option value="world">World</option>
-                    <option value="opinion">Opinion</option>
-                    <option value="theology">Theology</option>
-                    <option value="church">Church</option>
-                  </select>
+        <!-- ===== ARTICLE EDITOR (Professional Section-by-Section) ===== -->
+        <div id="articleFormPanel" style="display:none;">
+          <form id="articleForm">
+            <input type="hidden" id="articleId">
+
+            <!-- SECTION 1: Header & Title -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">1</span>
+                <div>
+                  <h3>Headline</h3>
+                  <p>The title and subtitle that readers see first</p>
                 </div>
               </div>
-              <div class="form-row">
+              <div class="editor-section-body">
                 <div class="form-group">
-                  <label for="articleLabel">Label</label>
-                  <input type="text" id="articleLabel" placeholder="e.g. Faith, Breaking, Exclusive">
+                  <label for="articleTitleInput">Article Title <span class="required">*</span></label>
+                  <input type="text" id="articleTitleInput" placeholder="Enter a compelling headline..." required class="input-large">
+                  <div class="input-hint">
+                    <span id="titleCharCount">0</span> characters
+                    &middot; Slug: <code id="slugPreview">—</code>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="articleImage">Featured Image URL</label>
-                  <div style="display:flex;gap:8px;">
-                    <input type="text" id="articleImage" placeholder="/uploads/image.jpg or URL" style="flex:1">
-                    <button type="button" class="btn btn-outline btn-sm" onclick="openImagePicker('articleImage')">Browse</button>
+                  <label for="articleSubtitle">Subtitle / Deck</label>
+                  <input type="text" id="articleSubtitle" placeholder="A brief summary that expands on the headline...">
+                  <div class="input-hint">Appears below the title on the article page</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2: Featured Image -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">2</span>
+                <div>
+                  <h3>Featured Image</h3>
+                  <p>The hero image displayed at the top of the article</p>
+                </div>
+              </div>
+              <div class="editor-section-body">
+                <div class="image-upload-area">
+                  <div class="image-preview" id="imagePreview">
+                    <div class="image-preview-empty" id="imagePreviewEmpty">
+                      <div style="font-size:2.5rem;margin-bottom:8px;">&#128247;</div>
+                      <div>No image selected</div>
+                      <div class="image-preview-hint">Upload or select from library</div>
+                    </div>
+                    <img id="imagePreviewImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+                  </div>
+                  <div class="image-upload-controls">
+                    <input type="text" id="articleImage" placeholder="Image URL or upload..." style="flex:1">
+                    <button type="button" class="btn btn-outline" onclick="openImagePicker('articleImage')">Browse Library</button>
+                    <button type="button" class="btn btn-outline" id="directUploadBtn">Upload New</button>
+                    <input type="file" id="directImageUpload" style="display:none" accept="image/*">
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="articleExcerpt">Excerpt</label>
-                <input type="text" id="articleExcerpt" placeholder="Brief description for listings">
-              </div>
-              <div class="form-group">
-                <label for="articleBody">Article Body</label>
-                <textarea id="articleBody" placeholder="Write your article here... HTML is supported." required></textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label><input type="checkbox" id="articleFeatured"> Featured article</label>
-                </div>
-                <div class="form-group">
-                  <label><input type="checkbox" id="articlePublished"> Published</label>
+            </div>
+
+            <!-- SECTION 3: Author & Metadata -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">3</span>
+                <div>
+                  <h3>Author &amp; Classification</h3>
+                  <p>Who wrote it and where it belongs</p>
                 </div>
               </div>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Save Article</button>
-                <button type="button" class="btn btn-outline" onclick="hideArticleForm()">Cancel</button>
+              <div class="editor-section-body">
+                <div class="form-row form-row-3">
+                  <div class="form-group">
+                    <label for="articleAuthor">Author Name <span class="required">*</span></label>
+                    <input type="text" id="articleAuthor" placeholder="Full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="articleSection">Section <span class="required">*</span></label>
+                    <select id="articleSection" required>
+                      <option value="">Select section...</option>
+                      <option value="faith">Faith</option>
+                      <option value="politics">Politics</option>
+                      <option value="culture">Culture</option>
+                      <option value="world">World</option>
+                      <option value="opinion">Opinion</option>
+                      <option value="theology">Theology</option>
+                      <option value="church">Church</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="articleLabel">Label / Tag</label>
+                    <input type="text" id="articleLabel" placeholder="e.g. Breaking, Revival, Exclusive">
+                    <div class="input-hint">Appears as the colored tag above the title</div>
+                  </div>
+                </div>
               </div>
-            </form>
-          </div>
+            </div>
+
+            <!-- SECTION 4: Excerpt -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">4</span>
+                <div>
+                  <h3>Excerpt</h3>
+                  <p>Short summary shown in article cards and listings</p>
+                </div>
+              </div>
+              <div class="editor-section-body">
+                <div class="form-group">
+                  <label for="articleExcerpt">Article Excerpt</label>
+                  <textarea id="articleExcerpt" placeholder="Write a 1-2 sentence summary of the article for homepage listings and previews..." rows="3" style="min-height:80px;resize:vertical;"></textarea>
+                  <div class="input-hint"><span id="excerptCharCount">0</span> / 300 characters recommended</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 5: Article Body -->
+            <div class="editor-section editor-section-wide">
+              <div class="editor-section-header">
+                <span class="editor-section-number">5</span>
+                <div>
+                  <h3>Article Body <span class="required">*</span></h3>
+                  <p>The full content of the article</p>
+                </div>
+              </div>
+              <div class="editor-section-body">
+                <!-- Rich Text Toolbar -->
+                <div class="rte-toolbar" id="rteToolbar">
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+                    <button type="button" class="rte-btn" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+                    <button type="button" class="rte-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+                    <button type="button" class="rte-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+                  </div>
+                  <div class="rte-divider"></div>
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-cmd="formatBlock" data-val="h2" title="Heading 2">H2</button>
+                    <button type="button" class="rte-btn" data-cmd="formatBlock" data-val="h3" title="Heading 3">H3</button>
+                    <button type="button" class="rte-btn" data-cmd="formatBlock" data-val="p" title="Paragraph">P</button>
+                  </div>
+                  <div class="rte-divider"></div>
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-cmd="formatBlock" data-val="blockquote" title="Blockquote">&#8220;</button>
+                    <button type="button" class="rte-btn" data-action="pullquote" title="Pull Quote">PQ</button>
+                  </div>
+                  <div class="rte-divider"></div>
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-cmd="insertUnorderedList" title="Bullet List">&#8226;</button>
+                    <button type="button" class="rte-btn" data-cmd="insertOrderedList" title="Numbered List">1.</button>
+                  </div>
+                  <div class="rte-divider"></div>
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-action="link" title="Insert Link">&#128279;</button>
+                    <button type="button" class="rte-btn" data-action="image" title="Insert Image">&#128247;</button>
+                    <button type="button" class="rte-btn" data-cmd="insertHorizontalRule" title="Horizontal Rule">&#8213;</button>
+                  </div>
+                  <div class="rte-divider"></div>
+                  <div class="rte-toolbar-group">
+                    <button type="button" class="rte-btn" data-cmd="removeFormat" title="Clear Formatting">&#10006;</button>
+                    <button type="button" class="rte-btn" data-action="source" title="View HTML Source">&lt;/&gt;</button>
+                  </div>
+                </div>
+
+                <!-- Rich Text Editor Area -->
+                <div class="rte-editor" id="rteEditor" contenteditable="true" data-placeholder="Start writing your article..."></div>
+                <!-- Hidden textarea for source mode -->
+                <textarea id="rteSource" class="rte-source" style="display:none;"></textarea>
+                <!-- Hidden field to store final HTML -->
+                <input type="hidden" id="articleBody">
+
+                <div class="editor-stats">
+                  <span id="wordCount">0 words</span>
+                  <span>&middot;</span>
+                  <span id="readTime">0 min read</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 6: Publishing Options -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">6</span>
+                <div>
+                  <h3>Publishing</h3>
+                  <p>Control visibility and prominence</p>
+                </div>
+              </div>
+              <div class="editor-section-body">
+                <div class="publish-options">
+                  <label class="toggle-option">
+                    <input type="checkbox" id="articlePublished">
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">
+                      <strong>Published</strong>
+                      <small>Make this article visible on the site</small>
+                    </span>
+                  </label>
+                  <label class="toggle-option">
+                    <input type="checkbox" id="articleFeatured">
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">
+                      <strong>Featured</strong>
+                      <small>Display prominently on the homepage hero</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACTION BAR -->
+            <div class="editor-actions">
+              <button type="button" class="btn btn-outline btn-lg" onclick="hideArticleForm()">Cancel</button>
+              <div style="display:flex;gap:8px;">
+                <button type="button" class="btn btn-outline btn-lg" onclick="saveAsDraft()">Save as Draft</button>
+                <button type="submit" class="btn btn-primary btn-lg">Publish Article</button>
+              </div>
+            </div>
+          </form>
         </div>
 
         <!-- Articles List -->
@@ -288,7 +434,7 @@
 
   <!-- Image Picker Modal -->
   <div class="modal-overlay" id="imagePickerModal">
-    <div class="modal">
+    <div class="modal modal-lg">
       <div class="modal-header">
         <h3>Select Image</h3>
         <button class="modal-close" onclick="closeImagePicker()">&times;</button>

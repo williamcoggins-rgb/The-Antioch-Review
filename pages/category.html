@@ -250,24 +250,69 @@
 
   <script src="../js/main.js"></script>
   <script>
-    // Dynamic category title based on URL param
     (function() {
       var params = new URLSearchParams(window.location.search);
       var cat = params.get("cat");
       var categories = {
         faith: { title: "Faith", desc: "Reporting on the global church, revival, spiritual formation, and the lived experience of believers navigating a secular age." },
-        politics: { title: "Politics", desc: "Analysis of policy, elections, and governance through a biblical worldview — equipping Christians to be faithful citizens." },
+        politics: { title: "Politics", desc: "Analysis of policy, elections, and governance through a biblical worldview \u2014 equipping Christians to be faithful citizens." },
         culture: { title: "Culture", desc: "Exploring film, music, books, technology, and social trends through the lens of faith and Christian virtue." },
         world: { title: "World", desc: "International news with a focus on the persecuted church, global missions, and events shaping the lives of believers worldwide." },
         opinion: { title: "Opinion", desc: "Bold commentary and thoughtful analysis from our team of writers and guest contributors." },
-        theology: { title: "Theology", desc: "Deep dives into doctrine, church history, and Scripture — making the rich tradition of Christian thought accessible to all." },
+        theology: { title: "Theology", desc: "Deep dives into doctrine, church history, and Scripture \u2014 making the rich tradition of Christian thought accessible to all." },
         church: { title: "Church", desc: "News and features about congregational life, pastoral ministry, denominational trends, and the future of the local church." }
       };
       if (cat && categories[cat]) {
         document.getElementById("categoryTitle").textContent = categories[cat].title;
         document.getElementById("categoryDesc").textContent = categories[cat].desc;
-        document.title = categories[cat].title + " — The Antioch Review";
+        document.title = categories[cat].title + " \u2014 The Antioch Review";
+        // Highlight active nav
+        document.querySelectorAll(".nav-list li a").forEach(function(a) {
+          a.classList.remove("active");
+          if (a.href && a.href.indexOf("cat=" + cat) !== -1) a.classList.add("active");
+        });
       }
+
+      // Load articles from API
+      if (!cat) return;
+      function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+      function fmtDate(s) {
+        if (!s) return '';
+        var d = new Date(s.indexOf('Z') === -1 ? s + 'Z' : s);
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      fetch('/api/articles/published?section=' + encodeURIComponent(cat) + '&limit=20')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var articles = data.articles || [];
+          if (!articles.length) return; // Keep static placeholders
+
+          // Render main article list
+          var listEl = document.querySelector('.article-list');
+          if (listEl) {
+            listEl.innerHTML = articles.map(function(a) {
+              var thumb = a.image_url
+                ? '<div class="thumb"><img src="' + esc(a.image_url) + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;"></div>'
+                : '<div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#9769;</div></div>';
+              return '<article class="article-list-item"><div>' +
+                '<span class="label">' + esc(a.label || a.section) + '</span>' +
+                '<h3><a href="/article/' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h3>' +
+                '<p>' + esc(a.excerpt || a.subtitle || '') + '</p>' +
+                '<div class="story-meta">By <span class="author">' + esc(a.author) + '</span> &middot; ' + fmtDate(a.created_at) + '</div>' +
+                '</div>' + thumb + '</article>';
+            }).join('');
+          }
+
+          // Render most-read sidebar
+          var mostRead = document.querySelector('.sidebar-widget .most-read-list');
+          if (mostRead && articles.length >= 2) {
+            mostRead.innerHTML = articles.slice(0, 4).map(function(a) {
+              return '<li class="most-read-item"><div><h4><a href="/article/' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h4>' +
+                '<div class="story-meta">' + esc(a.author) + '</div></div></li>';
+            }).join('');
+          }
+        }).catch(function() { /* Keep static placeholders */ });
     })();
   </script>
 </body>

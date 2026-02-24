@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Church in an Age of AI — The Antioch Review</title>
-  <meta name="description" content="As artificial intelligence reshapes society, Christian leaders and believers wrestle with questions about human dignity, creativity, and the imago Dei.">
+  <title>Loading... — The Antioch Review</title>
+  <meta name="description" content="">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -66,82 +66,57 @@
     </nav>
   </div>
 
-  <!-- ========== ARTICLE ========== -->
+  <!-- ========== ARTICLE (dynamic) ========== -->
   <main>
-    <article class="article-page">
-      <span class="label article-category">Cover Story</span>
-      <h1>The Church in an Age of AI: How Believers Are Navigating Technology's Moral Frontier</h1>
-      <p class="article-subtitle">As artificial intelligence reshapes every corner of society, Christian leaders, ethicists, and everyday believers are wrestling with profound questions about human dignity, creativity, and the imago Dei in a machine-driven world.</p>
-
-      <div class="article-byline">
-        <div class="byline-avatar">&#128100;</div>
-        <div class="byline-info">
-          <div class="author-name">James Whitfield</div>
-          <div class="publish-date">February 23, 2026 &middot; 12 min read</div>
-        </div>
-        <div class="article-share">
-          <button class="share-btn" aria-label="Share on Twitter">&#120143;</button>
-          <button class="share-btn" aria-label="Share on Facebook">f</button>
-          <button class="share-btn" aria-label="Copy link">&#128279;</button>
-        </div>
+    <article class="article-page" id="articleContent">
+      <!-- Loading state -->
+      <div id="articleLoading" style="text-align:center;padding:80px 0;">
+        <div style="font-size:0.8125rem;color:var(--color-medium-gray);text-transform:uppercase;letter-spacing:0.1em;">Loading article...</div>
       </div>
-
-      <div class="article-hero-image">
-        <div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:3rem;">&#9769;</div>
+      <!-- Error state (hidden by default) -->
+      <div id="articleError" style="display:none;text-align:center;padding:80px 0;">
+        <h2 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:16px;">Article Not Found</h2>
+        <p style="color:var(--color-dark-gray);margin-bottom:24px;">The article you're looking for doesn't exist or has been removed.</p>
+        <a href="../index.html" class="btn-subscribe" style="display:inline-block;">Back to Home</a>
       </div>
-      <p class="image-caption">Illustration: The intersection of faith and technology poses new questions for the 21st-century church. (The Antioch Review)</p>
+      <!-- Article content (populated by JS) -->
+      <div id="articleData" style="display:none;">
+        <span class="label article-category" id="artLabel"></span>
+        <h1 id="artTitle"></h1>
+        <p class="article-subtitle" id="artSubtitle"></p>
 
-      <div class="article-body">
-        <p>The sanctuary of Grace Fellowship Church in Nashville looks like any other on a Sunday morning — wooden pews, stained glass filtering morning light, hymnals tucked into seat backs. But this week, Pastor David Kim opened his sermon series with a question that would have been unthinkable just a few years ago: "What does it mean to be made in the image of God when machines can think?"</p>
-
-        <p>It's a question echoing through churches, seminaries, and Christian institutions across the country. As artificial intelligence systems grow more sophisticated — writing sermons, composing worship music, counseling the grieving, and even generating theological arguments — believers are being forced to grapple with what it means to be distinctly, irreplaceably human in God's economy.</p>
-
-        <div class="pullquote">"The question isn't whether AI will change the church. It already has. The question is whether the church will be shaped by technology or by theology."</div>
-
-        <h2>The Imago Dei Question</h2>
-
-        <p>At the heart of the Christian response to artificial intelligence is the doctrine of the <em>imago Dei</em> — the belief that human beings are uniquely created in the image of God. Genesis 1:27 has been the foundation of Christian anthropology for millennia, but the advent of seemingly intelligent machines is putting this doctrine under new pressure.</p>
-
-        <p>"We need to be very clear about what AI is and what it isn't," says Dr. Rebecca Thornton, professor of ethics at Trinity Evangelical Divinity School. "AI can mimic patterns of human speech, but it doesn't have a soul. It doesn't have a relationship with God. It doesn't bear His image. And those distinctions matter enormously."</p>
-
-        <p>Yet the distinctions are becoming harder to explain to a generation raised on conversational AI. When a chatbot can offer what feels like genuine empathy, when an algorithm can craft a devotional that moves someone to tears, the philosophical and theological boundaries begin to blur in practice, even if they remain clear in doctrine.</p>
-
-        <blockquote>"For you created my inmost being; you knit me together in my mother's womb. I praise you because I am fearfully and wonderfully made." — Psalm 139:13-14</blockquote>
-
-        <h2>AI in the Pews</h2>
-
-        <p>The practical implications are already being felt at the congregational level. A recent survey by the Barna Group found that 23% of Protestant pastors have used AI tools to help draft sermons. Among pastors under 40, that number jumps to 41%. Meanwhile, several major worship music platforms now offer AI-generated backing tracks, and at least two Christian publishing houses have acknowledged using AI in the editorial process.</p>
-
-        <p>For some, these tools are simply the latest in a long line of technologies the church has adopted — from the printing press to the microphone to the livestream. For others, they represent a fundamental threat to the authenticity of worship and the pastoral calling.</p>
-
-        <p>"When I stand before my congregation, they need to know that the words I'm speaking have been forged in prayer, in study, in wrestling with God's Word," says Pastor Kim. "If I'm reading something a machine wrote, what am I actually offering them? What has it cost me?"</p>
-
-        <h2>The Global Church Responds</h2>
-
-        <p>The conversation isn't limited to American evangelicalism. The Vatican released a formal document on AI ethics last year, and the World Evangelical Alliance has formed a commission to study the technology's impact on ministry and missions. In the Global South, where the church is growing fastest, AI is being explored as a tool for Bible translation and theological education in under-resourced communities.</p>
-
-        <p>The challenge, theologians say, is to neither demonize the technology nor uncritically embrace it — a tension that has characterized the church's relationship with innovation throughout history.</p>
-
-        <p>"Every powerful technology is a test of our character," writes ethicist Andy Crouch in his latest book. "AI is no different. The question is whether we will use it to serve our neighbors or to replace the costly, beautiful work of being present to one another."</p>
-
-        <div class="pullquote">"Every powerful technology is a test of our character. AI is no different."<br><span style="font-size:0.875rem;font-weight:400;">— Andy Crouch</span></div>
-
-        <p>As the church navigates this new frontier, one thing seems clear: the questions raised by artificial intelligence are not primarily technical. They are theological. They are about what it means to be human, what it means to be in community, and what it means to worship a God who chose to reveal Himself not through algorithms, but through incarnation — through flesh, and blood, and presence.</p>
-
-        <p>The answers will shape the church for generations to come.</p>
-      </div>
-
-      <!-- Paywall -->
-      <div class="paywall-overlay">
-        <div class="fade-out"></div>
-        <div class="paywall-box">
-          <h2>Continue Reading with a Subscription</h2>
-          <p>Get unlimited access to The Antioch Review's award-winning journalism, exclusive analysis, and daily devotional content.</p>
-          <a href="subscribe.html" class="btn-subscribe">Subscribe Now</a>
-          <p style="margin-top:16px;font-size:0.8125rem;color:#999;">Already a subscriber? <a href="#" style="color:#b8860b;font-weight:600;">Sign in</a></p>
+        <div class="article-byline">
+          <div class="byline-avatar">&#128100;</div>
+          <div class="byline-info">
+            <div class="author-name" id="artAuthor"></div>
+            <div class="publish-date" id="artDate"></div>
+          </div>
+          <div class="article-share">
+            <button class="share-btn" aria-label="Share on Twitter" onclick="shareTwitter()">&#120143;</button>
+            <button class="share-btn" aria-label="Share on Facebook" onclick="shareFacebook()">f</button>
+            <button class="share-btn" aria-label="Copy link" onclick="copyLink()">&#128279;</button>
+          </div>
         </div>
+
+        <div class="article-hero-image" id="artImageWrap">
+          <img id="artImage" src="" alt="" loading="eager">
+        </div>
+        <p class="image-caption" id="artCaption"></p>
+
+        <div class="article-body" id="artBody"></div>
       </div>
     </article>
+
+    <!-- Related Articles -->
+    <section class="section-row" id="relatedSection" style="display:none;">
+      <div class="container">
+        <div class="section-header">
+          <h2>More in <span id="relatedSectionName"></span></h2>
+          <a href="#" id="relatedSeeAll" class="see-all">See All &rarr;</a>
+        </div>
+        <div class="article-grid" id="relatedGrid"></div>
+      </div>
+    </section>
   </main>
 
   <!-- ========== FOOTER ========== -->
@@ -171,7 +146,6 @@
             <li><a href="subscribe.html">Subscribe</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Advertise</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -197,5 +171,128 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+    (function() {
+      // Extract slug from URL: /article/my-slug or ?slug=my-slug
+      var slug = '';
+      var pathParts = window.location.pathname.split('/').filter(Boolean);
+      var articleIdx = pathParts.indexOf('article');
+      if (articleIdx !== -1 && pathParts[articleIdx + 1]) {
+        slug = decodeURIComponent(pathParts[articleIdx + 1]);
+      }
+      if (!slug) {
+        var params = new URLSearchParams(window.location.search);
+        slug = params.get('slug') || '';
+      }
+
+      if (!slug) { showError(); return; }
+
+      fetch('/api/articles/slug/' + encodeURIComponent(slug))
+        .then(function(res) {
+          if (!res.ok) throw new Error('Not found');
+          return res.json();
+        })
+        .then(function(article) {
+          renderArticle(article);
+          loadRelated(article.section, article.id);
+        })
+        .catch(function() { showError(); });
+
+      function showError() {
+        document.getElementById('articleLoading').style.display = 'none';
+        document.getElementById('articleError').style.display = 'block';
+        document.title = 'Article Not Found \u2014 The Antioch Review';
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '';
+        var d = new Date(dateStr.indexOf('Z') === -1 ? dateStr + 'Z' : dateStr);
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      function estimateReadTime(html) {
+        var text = html.replace(/<[^>]*>/g, ' ');
+        var words = text.split(/\s+/).filter(function(w) { return w.length > 0; }).length;
+        return Math.max(1, Math.ceil(words / 250));
+      }
+
+      function escapeAttr(str) {
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      }
+
+      function renderArticle(a) {
+        document.getElementById('articleLoading').style.display = 'none';
+        document.getElementById('articleData').style.display = 'block';
+
+        document.title = a.title + ' \u2014 The Antioch Review';
+        var metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', a.excerpt || a.subtitle || '');
+
+        document.getElementById('artLabel').textContent = a.label || a.section;
+        document.getElementById('artTitle').textContent = a.title;
+
+        var subtitleEl = document.getElementById('artSubtitle');
+        if (a.subtitle) { subtitleEl.textContent = a.subtitle; } else { subtitleEl.style.display = 'none'; }
+
+        document.getElementById('artAuthor').textContent = a.author;
+        document.getElementById('artDate').textContent = formatDate(a.created_at) + ' \u00B7 ' + estimateReadTime(a.body) + ' min read';
+
+        var imgWrap = document.getElementById('artImageWrap');
+        var imgEl = document.getElementById('artImage');
+        var captionEl = document.getElementById('artCaption');
+        if (a.image_url) {
+          imgEl.src = a.image_url;
+          imgEl.alt = a.title;
+          captionEl.textContent = a.title + ' (The Antioch Review)';
+        } else {
+          imgWrap.style.display = 'none';
+          captionEl.style.display = 'none';
+        }
+
+        document.getElementById('artBody').innerHTML = a.body;
+
+        // Highlight nav
+        document.querySelectorAll('.nav-list li a').forEach(function(link) {
+          link.classList.remove('active');
+          if (link.href && link.href.indexOf('cat=' + a.section) !== -1) link.classList.add('active');
+        });
+      }
+
+      function loadRelated(section, currentId) {
+        fetch('/api/articles/published?section=' + encodeURIComponent(section) + '&limit=5')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var related = (data.articles || []).filter(function(a) { return a.id !== currentId; }).slice(0, 4);
+            if (!related.length) return;
+            document.getElementById('relatedSection').style.display = '';
+            document.getElementById('relatedSectionName').textContent = section.charAt(0).toUpperCase() + section.slice(1);
+            document.getElementById('relatedSeeAll').href = 'category.html?cat=' + section;
+            document.getElementById('relatedGrid').innerHTML = related.map(function(a) {
+              var img = a.image_url
+                ? '<div class="card-image"><img src="' + escapeAttr(a.image_url) + '" alt="" loading="lazy"></div>'
+                : '<div class="card-image"><div class="image-placeholder">&#9769;</div></div>';
+              return '<article class="article-card">' + img +
+                '<span class="label">' + (a.label || a.section) + '</span>' +
+                '<h3><a href="/article/' + encodeURIComponent(a.slug) + '">' + escapeAttr(a.title) + '</a></h3>' +
+                '<p>' + escapeAttr(a.excerpt || '') + '</p>' +
+                '<div class="story-meta">By <span class="author">' + escapeAttr(a.author) + '</span></div></article>';
+            }).join('');
+          }).catch(function() {});
+      }
+
+      window.shareTwitter = function() {
+        window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.title), '_blank', 'width=550,height=420');
+      };
+      window.shareFacebook = function() {
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=550,height=420');
+      };
+      window.copyLink = function() {
+        navigator.clipboard.writeText(window.location.href).then(function() {
+          var btn = document.querySelector('.share-btn[aria-label="Copy link"]');
+          if (btn) { btn.textContent = '\u2713'; setTimeout(function() { btn.innerHTML = '&#128279;'; }, 1500); }
+        });
+      };
+    })();
+  </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 /* ============================================
    THE ANTIOCH REVIEW — Admin Panel JavaScript
+   Professional CMS Experience
    ============================================ */
 (function () {
   'use strict';
@@ -13,6 +14,7 @@
   var imagesPage = 1;
   var paymentsPage = 1;
   var imagePickerTarget = null;
+  var isSourceMode = false;
 
   // --- API helpers ---
   function api(method, path, data) {
@@ -97,15 +99,12 @@
   // --- Navigation ---
   function navigateTo(page) {
     currentPage = page;
-    // Update nav
     document.querySelectorAll('.sidebar-nav a').forEach(function (a) {
       a.classList.toggle('active', a.getAttribute('data-page') === page);
     });
-    // Show/hide pages
     document.querySelectorAll('.admin-page').forEach(function (p) {
       p.style.display = p.id === 'page-' + page ? 'block' : 'none';
     });
-    // Load data
     switch (page) {
       case 'dashboard': loadDashboard(); break;
       case 'subscribers': loadSubscribers(); break;
@@ -124,13 +123,11 @@
       document.getElementById('statImages').textContent = data.totalImages;
       document.getElementById('statPayments').textContent = data.totalPayments;
 
-      // Recent subscribers
       var subBody = document.querySelector('#recentSubscribers tbody');
       subBody.innerHTML = data.recentSubscribers.map(function (s) {
         return '<tr><td>' + escapeHtml(s.email) + '</td><td>' + formatDate(s.subscribed_at) + '</td></tr>';
       }).join('') || '<tr><td colspan="2" style="color:var(--admin-text-light)">No subscribers yet</td></tr>';
 
-      // Recent articles
       var artBody = document.querySelector('#recentArticles tbody');
       artBody.innerHTML = data.recentArticles.map(function (a) {
         var badge = a.published ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-warning">Draft</span>';
@@ -179,17 +176,19 @@
       var tbody = document.querySelector('#articlesTable tbody');
       tbody.innerHTML = data.articles.map(function (a) {
         var badge = a.published ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-warning">Draft</span>';
+        var featBadge = a.featured ? ' <span class="badge badge-info">Featured</span>' : '';
         return '<tr>' +
           '<td><strong>' + escapeHtml(a.title).substring(0, 50) + '</strong></td>' +
           '<td>' + escapeHtml(a.author) + '</td>' +
           '<td style="text-transform:capitalize">' + escapeHtml(a.section) + '</td>' +
-          '<td>' + badge + '</td>' +
+          '<td>' + badge + featBadge + '</td>' +
           '<td>' + formatDate(a.created_at) + '</td>' +
-          '<td>' +
+          '<td style="white-space:nowrap">' +
           '<button class="btn btn-outline btn-sm" onclick="editArticle(' + a.id + ')" style="margin-right:4px">Edit</button>' +
+          '<button class="btn btn-success btn-sm" onclick="viewArticle(\'' + escapeHtml(a.slug) + '\')" style="margin-right:4px">View</button>' +
           '<button class="btn btn-danger btn-sm" onclick="deleteArticle(' + a.id + ')">Delete</button>' +
           '</td></tr>';
-      }).join('') || '<tr><td colspan="6" style="color:var(--admin-text-light)">No articles found. Click "New Article" to create one.</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="color:var(--admin-text-light)">No articles found. Click "+ New Article" to create one.</td></tr>';
 
       renderPagination('articlesPagination', data.total, data.page, data.limit, function (p) {
         articlesPage = p;
@@ -198,11 +197,23 @@
     });
   }
 
+  window.viewArticle = function (slug) {
+    window.open('/article/' + slug, '_blank');
+  };
+
   window.showArticleForm = function (article) {
     document.getElementById('articleFormPanel').style.display = 'block';
     document.getElementById('articlesListPanel').style.display = 'none';
+
+    // Scroll to top
+    document.querySelector('.admin-main').scrollTop = 0;
+
+    var editor = document.getElementById('rteEditor');
+    isSourceMode = false;
+    document.getElementById('rteSource').style.display = 'none';
+    editor.style.display = 'block';
+
     if (article) {
-      document.getElementById('articleFormTitle').textContent = 'Edit Article';
       document.getElementById('articleId').value = article.id;
       document.getElementById('articleTitleInput').value = article.title;
       document.getElementById('articleSubtitle').value = article.subtitle || '';
@@ -211,14 +222,22 @@
       document.getElementById('articleLabel').value = article.label || '';
       document.getElementById('articleImage').value = article.image_url || '';
       document.getElementById('articleExcerpt').value = article.excerpt || '';
-      document.getElementById('articleBody').value = article.body;
+      editor.innerHTML = article.body || '';
       document.getElementById('articleFeatured').checked = !!article.featured;
       document.getElementById('articlePublished').checked = !!article.published;
     } else {
-      document.getElementById('articleFormTitle').textContent = 'New Article';
-      document.getElementById('articleForm').reset();
       document.getElementById('articleId').value = '';
+      document.getElementById('articleForm').reset();
+      editor.innerHTML = '';
+      document.getElementById('articleFeatured').checked = false;
+      document.getElementById('articlePublished').checked = false;
     }
+
+    // Update live counters
+    updateTitleCounter();
+    updateExcerptCounter();
+    updateImagePreview();
+    updateEditorStats();
   };
 
   window.hideArticleForm = function () {
@@ -233,12 +252,37 @@
   };
 
   window.deleteArticle = function (id) {
-    if (!confirm('Are you sure you want to delete this article?')) return;
+    if (!confirm('Are you sure you want to delete this article? This cannot be undone.')) return;
     api('DELETE', 'articles/' + id).then(function () {
       toast('Article deleted');
       loadArticles();
     }).catch(function (err) { toast(err.message, 'error'); });
   };
+
+  window.saveAsDraft = function () {
+    document.getElementById('articlePublished').checked = false;
+    document.getElementById('articleForm').dispatchEvent(new Event('submit', { cancelable: true }));
+  };
+
+  function gatherArticleData() {
+    // Sync editor content to hidden field
+    var editor = document.getElementById('rteEditor');
+    var source = document.getElementById('rteSource');
+    var body = isSourceMode ? source.value : editor.innerHTML;
+
+    return {
+      title: document.getElementById('articleTitleInput').value.trim(),
+      subtitle: document.getElementById('articleSubtitle').value.trim(),
+      author: document.getElementById('articleAuthor').value.trim(),
+      section: document.getElementById('articleSection').value,
+      label: document.getElementById('articleLabel').value.trim(),
+      image_url: document.getElementById('articleImage').value.trim(),
+      excerpt: document.getElementById('articleExcerpt').value.trim(),
+      body: body,
+      featured: document.getElementById('articleFeatured').checked,
+      published: document.getElementById('articlePublished').checked
+    };
+  }
 
   function saveArticle(data) {
     var id = document.getElementById('articleId').value;
@@ -254,6 +298,159 @@
         window.hideArticleForm();
         loadArticles();
       });
+    }
+  }
+
+  // --- Rich Text Editor ---
+  function initRichTextEditor() {
+    var toolbar = document.getElementById('rteToolbar');
+    var editor = document.getElementById('rteEditor');
+    var source = document.getElementById('rteSource');
+
+    // Toolbar button clicks
+    toolbar.addEventListener('click', function (e) {
+      var btn = e.target.closest('.rte-btn');
+      if (!btn) return;
+      e.preventDefault();
+
+      var cmd = btn.getAttribute('data-cmd');
+      var val = btn.getAttribute('data-val');
+      var action = btn.getAttribute('data-action');
+
+      if (action === 'source') {
+        toggleSourceMode();
+        return;
+      }
+
+      // Make sure we're in visual mode
+      if (isSourceMode) return;
+
+      editor.focus();
+
+      if (action === 'link') {
+        var url = prompt('Enter URL:');
+        if (url) document.execCommand('createLink', false, url);
+        return;
+      }
+
+      if (action === 'image') {
+        var imgUrl = prompt('Enter image URL:');
+        if (imgUrl) document.execCommand('insertHTML', false, '<img src="' + imgUrl + '" alt="" style="max-width:100%;height:auto;margin:16px 0;border-radius:8px;">');
+        return;
+      }
+
+      if (action === 'pullquote') {
+        var sel = window.getSelection();
+        var text = sel.toString() || 'Your pull quote here';
+        document.execCommand('insertHTML', false, '<div class="pullquote">' + escapeHtml(text) + '</div><p></p>');
+        return;
+      }
+
+      if (cmd === 'formatBlock' && val) {
+        document.execCommand(cmd, false, '<' + val + '>');
+      } else if (cmd) {
+        document.execCommand(cmd, false, val || null);
+      }
+
+      updateEditorStats();
+    });
+
+    // Keyboard shortcuts in editor
+    editor.addEventListener('keydown', function (e) {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case 'b': e.preventDefault(); document.execCommand('bold'); break;
+          case 'i': e.preventDefault(); document.execCommand('italic'); break;
+          case 'u': e.preventDefault(); document.execCommand('underline'); break;
+        }
+      }
+    });
+
+    // Update stats on input
+    editor.addEventListener('input', function () {
+      updateEditorStats();
+    });
+
+    // Paste as clean HTML
+    editor.addEventListener('paste', function (e) {
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData('text/html');
+      if (!text) text = (e.clipboardData || window.clipboardData).getData('text/plain');
+      // Clean up pasted HTML - strip dangerous stuff but keep basic formatting
+      var temp = document.createElement('div');
+      temp.innerHTML = text;
+      // Remove scripts and styles
+      temp.querySelectorAll('script, style, link, meta').forEach(function (el) { el.remove(); });
+      document.execCommand('insertHTML', false, temp.innerHTML);
+      updateEditorStats();
+    });
+  }
+
+  function toggleSourceMode() {
+    var editor = document.getElementById('rteEditor');
+    var source = document.getElementById('rteSource');
+    var sourceBtn = document.querySelector('.rte-btn[data-action="source"]');
+
+    if (isSourceMode) {
+      // Switch to visual mode
+      editor.innerHTML = source.value;
+      source.style.display = 'none';
+      editor.style.display = 'block';
+      sourceBtn.classList.remove('active');
+      isSourceMode = false;
+    } else {
+      // Switch to source mode
+      source.value = editor.innerHTML;
+      editor.style.display = 'none';
+      source.style.display = 'block';
+      sourceBtn.classList.add('active');
+      isSourceMode = true;
+    }
+  }
+
+  function updateEditorStats() {
+    var editor = document.getElementById('rteEditor');
+    var text = editor.innerText || editor.textContent || '';
+    var words = text.trim().split(/\s+/).filter(function (w) { return w.length > 0; }).length;
+    var minutes = Math.max(1, Math.ceil(words / 250));
+    document.getElementById('wordCount').textContent = words + ' word' + (words !== 1 ? 's' : '');
+    document.getElementById('readTime').textContent = minutes + ' min read';
+  }
+
+  // --- Title / Excerpt / Image live counters ---
+  function updateTitleCounter() {
+    var title = document.getElementById('articleTitleInput').value;
+    document.getElementById('titleCharCount').textContent = title.length;
+
+    // Generate slug preview
+    var slug = title.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .substring(0, 80);
+    document.getElementById('slugPreview').textContent = slug || '\u2014';
+  }
+
+  function updateExcerptCounter() {
+    var excerpt = document.getElementById('articleExcerpt').value;
+    document.getElementById('excerptCharCount').textContent = excerpt.length;
+  }
+
+  function updateImagePreview() {
+    var url = document.getElementById('articleImage').value.trim();
+    var img = document.getElementById('imagePreviewImg');
+    var empty = document.getElementById('imagePreviewEmpty');
+    if (url) {
+      img.src = url;
+      img.style.display = 'block';
+      empty.style.display = 'none';
+      img.onerror = function () {
+        img.style.display = 'none';
+        empty.style.display = 'flex';
+      };
+    } else {
+      img.style.display = 'none';
+      empty.style.display = 'flex';
     }
   }
 
@@ -291,7 +488,7 @@
     }).catch(function (err) { toast(err.message, 'error'); });
   };
 
-  function uploadFiles(files) {
+  function uploadFiles(files, callback) {
     Array.from(files).forEach(function (file) {
       var formData = new FormData();
       formData.append('image', file);
@@ -303,6 +500,7 @@
         .then(function (data) {
           if (data.error) throw new Error(data.error);
           toast('Image uploaded: ' + file.name);
+          if (callback) callback(data);
           loadImages();
         })
         .catch(function (err) { toast(err.message, 'error'); });
@@ -313,7 +511,6 @@
   window.openImagePicker = function (targetInputId) {
     imagePickerTarget = targetInputId;
     document.getElementById('imagePickerModal').classList.add('visible');
-    // Load images into picker
     api('GET', 'upload?limit=50').then(function (data) {
       var grid = document.getElementById('modalImageGrid');
       grid.innerHTML = data.images.map(function (img) {
@@ -332,6 +529,7 @@
   window.selectImage = function (url) {
     if (imagePickerTarget) {
       document.getElementById(imagePickerTarget).value = url;
+      updateImagePreview();
     }
     window.closeImagePicker();
   };
@@ -380,6 +578,7 @@
   // --- Event listeners ---
   document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
+    initRichTextEditor();
 
     // Login form
     document.getElementById('loginForm').addEventListener('submit', function (e) {
@@ -404,21 +603,15 @@
       });
     });
 
-    // Article form
+    // Article form submit
     document.getElementById('articleForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      saveArticle({
-        title: document.getElementById('articleTitleInput').value,
-        subtitle: document.getElementById('articleSubtitle').value,
-        author: document.getElementById('articleAuthor').value,
-        section: document.getElementById('articleSection').value,
-        label: document.getElementById('articleLabel').value,
-        image_url: document.getElementById('articleImage').value,
-        excerpt: document.getElementById('articleExcerpt').value,
-        body: document.getElementById('articleBody').value,
-        featured: document.getElementById('articleFeatured').checked,
-        published: document.getElementById('articlePublished').checked
-      }).catch(function (err) { toast(err.message, 'error'); });
+      var data = gatherArticleData();
+      if (!data.title || !data.author || !data.section || !data.body || data.body === '<br>' || data.body.trim() === '') {
+        toast('Please fill in Title, Author, Section, and Body', 'error');
+        return;
+      }
+      saveArticle(data).catch(function (err) { toast(err.message, 'error'); });
     });
 
     // Section filter tabs
@@ -431,6 +624,34 @@
         loadArticles();
       });
     });
+
+    // Live title counter
+    document.getElementById('articleTitleInput').addEventListener('input', updateTitleCounter);
+
+    // Live excerpt counter
+    document.getElementById('articleExcerpt').addEventListener('input', updateExcerptCounter);
+
+    // Live image preview
+    document.getElementById('articleImage').addEventListener('input', updateImagePreview);
+    document.getElementById('articleImage').addEventListener('change', updateImagePreview);
+
+    // Direct image upload button
+    var directUploadBtn = document.getElementById('directUploadBtn');
+    var directInput = document.getElementById('directImageUpload');
+    if (directUploadBtn && directInput) {
+      directUploadBtn.addEventListener('click', function () { directInput.click(); });
+      directInput.addEventListener('change', function () {
+        if (directInput.files.length) {
+          uploadFiles(directInput.files, function (data) {
+            if (data.url) {
+              document.getElementById('articleImage').value = data.url;
+              updateImagePreview();
+            }
+          });
+          directInput.value = '';
+        }
+      });
+    }
 
     // Image upload — drag & drop zone
     var uploadZone = document.getElementById('uploadZone');
@@ -455,7 +676,6 @@
       modalFileInput.addEventListener('change', function () {
         uploadFiles(modalFileInput.files);
         modalFileInput.value = '';
-        // Reload picker after upload
         setTimeout(function () { window.openImagePicker(imagePickerTarget); }, 1000);
       });
     }
@@ -469,8 +689,8 @@
     document.getElementById('passwordForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var newPw = document.getElementById('newPassword').value;
-      var confirm = document.getElementById('confirmPassword').value;
-      if (newPw !== confirm) { toast('Passwords do not match', 'error'); return; }
+      var confirmPw = document.getElementById('confirmPassword').value;
+      if (newPw !== confirmPw) { toast('Passwords do not match', 'error'); return; }
       api('POST', 'auth/change-password', { newPassword: newPw }).then(function () {
         toast('Password changed successfully');
         document.getElementById('passwordForm').reset();

@@ -53,6 +53,7 @@
     { "source": "/subscribe", "destination": "/pages/subscribe.html" },
     { "source": "/merch", "destination": "/pages/merch.html" },
     { "source": "/about", "destination": "/pages/about.html" },
-    { "source": "/admin", "destination": "/pages/admin.html" }
+    { "source": "/admin", "destination": "/pages/admin.html" },
+    { "source": "/article/:slug", "destination": "/pages/article.html" }
   ]
 }

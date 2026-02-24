@@ -1,5 +1,6 @@
 /* ============================================
    THE ANTIOCH REVIEW — Admin Panel Styles
+   Professional CMS Design
    ============================================ */
 
 :root {
@@ -63,9 +64,7 @@ body {
   font-size: 0.875rem;
 }
 
-.login-card .form-group {
-  margin-bottom: 16px;
-}
+.login-card .form-group { margin-bottom: 16px; }
 
 .login-card label {
   display: block;
@@ -140,9 +139,7 @@ body {
   letter-spacing: 1px;
 }
 
-.sidebar-nav {
-  list-style: none;
-}
+.sidebar-nav { list-style: none; }
 
 .sidebar-nav li a {
   display: flex;
@@ -264,9 +261,7 @@ body {
   font-weight: 700;
 }
 
-.panel-body {
-  padding: 20px;
-}
+.panel-body { padding: 20px; }
 
 /* --- Buttons --- */
 .btn {
@@ -308,6 +303,11 @@ body {
   font-size: 0.75rem;
 }
 
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 0.9375rem;
+}
+
 .btn-success {
   background: var(--admin-success);
   color: white;
@@ -337,9 +337,7 @@ body {
   font-size: 0.875rem;
 }
 
-.data-table tr:hover {
-  background: #f9fafb;
-}
+.data-table tr:hover { background: #f9fafb; }
 
 .data-table .badge {
   display: inline-block;
@@ -356,9 +354,7 @@ body {
 .badge-danger { background: #fef2f2; color: #dc2626; }
 
 /* --- Forms --- */
-.form-group {
-  margin-bottom: 16px;
-}
+.form-group { margin-bottom: 16px; }
 
 .form-group label {
   display: block;
@@ -367,6 +363,8 @@ body {
   margin-bottom: 6px;
   color: var(--admin-text);
 }
+
+.form-group .required { color: var(--admin-danger); }
 
 .form-group input,
 .form-group select,
@@ -390,8 +388,28 @@ body {
 }
 
 .form-group textarea {
-  min-height: 200px;
+  min-height: 100px;
   resize: vertical;
+}
+
+.input-large {
+  font-size: 1.25rem !important;
+  padding: 14px 16px !important;
+  font-weight: 600;
+}
+
+.input-hint {
+  font-size: 0.75rem;
+  color: var(--admin-text-light);
+  margin-top: 6px;
+}
+
+.input-hint code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.6875rem;
 }
 
 .form-row {
@@ -400,12 +418,349 @@ body {
   gap: 16px;
 }
 
+.form-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .form-actions {
   display: flex;
   gap: 12px;
   padding-top: 16px;
   border-top: 1px solid var(--admin-border);
   margin-top: 16px;
+}
+
+/* ============================================
+   ARTICLE EDITOR — Section-by-Section Design
+   ============================================ */
+.editor-section {
+  background: var(--admin-card);
+  border-radius: 10px;
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editor-section:focus-within {
+  border-color: var(--admin-primary);
+  box-shadow: var(--admin-shadow), 0 0 0 2px rgba(196, 155, 42, 0.1);
+}
+
+.editor-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px 0;
+}
+
+.editor-section-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-primary-hover));
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.editor-section-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin-bottom: 2px;
+}
+
+.editor-section-header p {
+  font-size: 0.8125rem;
+  color: var(--admin-text-light);
+}
+
+.editor-section-body {
+  padding: 16px 24px 24px;
+}
+
+/* --- Image Upload Area --- */
+.image-upload-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.image-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #f9fafb;
+  border: 2px dashed var(--admin-border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-preview-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-text-light);
+  font-size: 0.875rem;
+}
+
+.image-preview-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.image-upload-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.image-upload-controls input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+
+.image-upload-controls input[type="text"]:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(196, 155, 42, 0.15);
+}
+
+/* --- Rich Text Editor --- */
+.rte-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px 8px 0 0;
+  flex-wrap: wrap;
+}
+
+.rte-toolbar-group {
+  display: flex;
+  gap: 2px;
+}
+
+.rte-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--admin-border);
+  margin: 0 4px;
+}
+
+.rte-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--admin-text);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rte-btn:hover {
+  background: #e5e7eb;
+}
+
+.rte-btn.active,
+.rte-btn:active {
+  background: var(--admin-primary);
+  color: white;
+}
+
+.rte-editor {
+  min-height: 400px;
+  max-height: 800px;
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid var(--admin-border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--admin-text);
+  background: white;
+  outline: none;
+}
+
+.rte-editor:empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.rte-editor:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(196, 155, 42, 0.1);
+}
+
+.rte-editor p { margin-bottom: 16px; }
+.rte-editor h2 { font-size: 1.5rem; font-weight: 700; margin: 24px 0 12px; }
+.rte-editor h3 { font-size: 1.25rem; font-weight: 600; margin: 20px 0 10px; }
+.rte-editor blockquote {
+  border-left: 4px solid var(--admin-primary);
+  padding-left: 16px;
+  margin: 16px 0;
+  font-style: italic;
+  color: #555;
+}
+.rte-editor .pullquote {
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 24px;
+  margin: 24px 0;
+  border-top: 3px solid var(--admin-primary);
+  border-bottom: 3px solid var(--admin-primary);
+  color: #1a1a2e;
+}
+.rte-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.rte-editor ul, .rte-editor ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+.rte-editor li { margin-bottom: 6px; list-style: disc; }
+.rte-editor ol li { list-style: decimal; }
+
+.rte-source {
+  width: 100%;
+  min-height: 400px;
+  padding: 16px;
+  border: 1px solid var(--admin-border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--admin-text);
+  background: #1a1a2e;
+  color: #e8e6e1;
+  resize: vertical;
+}
+
+.editor-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 0;
+  font-size: 0.75rem;
+  color: var(--admin-text-light);
+}
+
+/* --- Publishing Toggles --- */
+.publish-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toggle-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: #f9fafb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1px solid var(--admin-border);
+}
+
+.toggle-option:hover {
+  background: #f3f4f6;
+}
+
+.toggle-option input {
+  display: none;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #d1d5db;
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.toggle-option input:checked + .toggle-switch {
+  background: var(--admin-primary);
+}
+
+.toggle-option input:checked + .toggle-switch::after {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-label strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.toggle-label small {
+  font-size: 0.8125rem;
+  color: var(--admin-text-light);
+}
+
+/* --- Editor Action Bar --- */
+.editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  bottom: 0;
+  background: var(--admin-bg);
+  border-top: 1px solid var(--admin-border);
+  margin-top: 8px;
+  z-index: 10;
 }
 
 /* --- Image Grid --- */
@@ -441,9 +796,7 @@ body {
   transition: opacity 0.2s;
 }
 
-.image-item:hover .image-overlay {
-  opacity: 1;
-}
+.image-item:hover .image-overlay { opacity: 1; }
 
 .image-item .image-overlay button {
   background: white;
@@ -607,9 +960,7 @@ body {
   z-index: 5000;
 }
 
-.modal-overlay.visible {
-  display: flex;
-}
+.modal-overlay.visible { display: flex; }
 
 .modal {
   background: white;
@@ -620,6 +971,8 @@ body {
   overflow-y: auto;
   box-shadow: var(--admin-shadow-lg);
 }
+
+.modal-lg { max-width: 800px; }
 
 .modal-header {
   display: flex;
@@ -644,9 +997,7 @@ body {
   line-height: 1;
 }
 
-.modal-body {
-  padding: 20px;
-}
+.modal-body { padding: 20px; }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
@@ -671,11 +1022,39 @@ body {
     padding: 16px;
   }
 
-  .form-row {
+  .form-row,
+  .form-row-3 {
     grid-template-columns: 1fr;
   }
 
   .stat-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .image-upload-controls {
+    flex-wrap: wrap;
+  }
+
+  .rte-toolbar {
+    gap: 2px;
+  }
+
+  .rte-divider {
+    display: none;
+  }
+
+  .editor-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .editor-actions > div {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .editor-actions > div .btn {
+    flex: 1;
   }
 }
