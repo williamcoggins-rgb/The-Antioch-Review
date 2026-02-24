@@ -920,6 +920,97 @@ body {
 
 
 /* ============================================
+   CATEGORY SELECTOR — Visual Section Cards
+   ============================================ */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 10px;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: inherit;
+  text-align: center;
+  color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+
+.category-card:hover {
+  border-color: var(--border-light);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+}
+
+.category-card.active {
+  border-color: var(--gold);
+  background: rgba(201, 162, 39, 0.06);
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.12), inset 0 1px 0 rgba(201, 162, 39, 0.15);
+}
+
+.category-card.active .category-name {
+  color: var(--gold-light);
+}
+
+.category-card.active .category-icon {
+  transform: scale(1.15);
+}
+
+.category-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s var(--ease-spring);
+  line-height: 1;
+}
+
+.category-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+
+.category-desc {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Per-section active colors */
+.category-card[data-section="faith"].active { border-color: #c9a227; box-shadow: 0 0 20px rgba(201,162,39,0.15); }
+.category-card[data-section="politics"].active { border-color: #ef4444; box-shadow: 0 0 20px rgba(239,68,68,0.15); }
+.category-card[data-section="politics"].active .category-name { color: #fca5a5; }
+.category-card[data-section="culture"].active { border-color: #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.15); }
+.category-card[data-section="culture"].active .category-name { color: #c4b5fd; }
+.category-card[data-section="world"].active { border-color: #3b82f6; box-shadow: 0 0 20px rgba(59,130,246,0.15); }
+.category-card[data-section="world"].active .category-name { color: #93c5fd; }
+.category-card[data-section="opinion"].active { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.15); }
+.category-card[data-section="opinion"].active .category-name { color: #fcd34d; }
+.category-card[data-section="theology"].active { border-color: #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.15); }
+.category-card[data-section="theology"].active .category-name { color: #6ee7b7; }
+.category-card[data-section="church"].active { border-color: #ec4899; box-shadow: 0 0 20px rgba(236,72,153,0.15); }
+.category-card[data-section="church"].active .category-name { color: #f9a8d4; }
+
+
+/* ============================================
    IMAGE UPLOAD AREA
    ============================================ */
 .image-upload-area {

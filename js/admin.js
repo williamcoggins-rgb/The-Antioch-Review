@@ -126,13 +126,13 @@
       var subBody = document.querySelector('#recentSubscribers tbody');
       subBody.innerHTML = data.recentSubscribers.map(function (s) {
         return '<tr><td>' + escapeHtml(s.email) + '</td><td>' + formatDate(s.subscribed_at) + '</td></tr>';
-      }).join('') || '<tr><td colspan="2" style="color:var(--admin-text-light)">No subscribers yet</td></tr>';
+      }).join('') || '<tr><td colspan="2" style="color:var(--text-muted)">No subscribers yet</td></tr>';
 
       var artBody = document.querySelector('#recentArticles tbody');
       artBody.innerHTML = data.recentArticles.map(function (a) {
         var badge = a.published ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-warning">Draft</span>';
         return '<tr><td>' + escapeHtml(a.title).substring(0, 40) + '</td><td style="text-transform:capitalize">' + escapeHtml(a.section) + '</td><td>' + badge + '</td></tr>';
-      }).join('') || '<tr><td colspan="3" style="color:var(--admin-text-light)">No articles yet</td></tr>';
+      }).join('') || '<tr><td colspan="3" style="color:var(--text-muted)">No articles yet</td></tr>';
     });
   }
 
@@ -151,7 +151,7 @@
           '<td>' + statusBadge + '</td>' +
           '<td><button class="btn btn-danger btn-sm" onclick="deleteSubscriber(' + s.id + ')">Delete</button></td>' +
           '</tr>';
-      }).join('') || '<tr><td colspan="6" style="color:var(--admin-text-light)">No subscribers found</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="color:var(--text-muted)">No subscribers found</td></tr>';
 
       renderPagination('subscribersPagination', data.total, data.page, data.limit, function (p) {
         subscribersPage = p;
@@ -168,6 +168,30 @@
     }).catch(function (err) { toast(err.message, 'error'); });
   };
 
+  // --- Section colors for badges ---
+  var sectionColors = {
+    faith:    { bg: 'rgba(201,162,39,0.12)',  text: '#e4c65a', border: 'rgba(201,162,39,0.25)' },
+    politics: { bg: 'rgba(239,68,68,0.12)',   text: '#fca5a5', border: 'rgba(239,68,68,0.25)' },
+    culture:  { bg: 'rgba(168,85,247,0.12)',  text: '#c4b5fd', border: 'rgba(168,85,247,0.25)' },
+    world:    { bg: 'rgba(59,130,246,0.12)',   text: '#93c5fd', border: 'rgba(59,130,246,0.25)' },
+    opinion:  { bg: 'rgba(245,158,11,0.12)',  text: '#fcd34d', border: 'rgba(245,158,11,0.25)' },
+    theology: { bg: 'rgba(16,185,129,0.12)',  text: '#6ee7b7', border: 'rgba(16,185,129,0.25)' },
+    church:   { bg: 'rgba(236,72,153,0.12)',  text: '#f9a8d4', border: 'rgba(236,72,153,0.25)' }
+  };
+
+  function sectionBadge(section) {
+    var c = sectionColors[section] || { bg: 'rgba(255,255,255,0.06)', text: '#9ca3b4', border: 'rgba(255,255,255,0.1)' };
+    return '<span class="badge" style="background:' + c.bg + ';color:' + c.text + ';border:1px solid ' + c.border + ';text-transform:capitalize;">' + escapeHtml(section) + '</span>';
+  }
+
+  // --- Section selector for article editor ---
+  window.selectSection = function (section) {
+    document.getElementById('articleSection').value = section;
+    document.querySelectorAll('#categoryGrid .category-card').forEach(function (card) {
+      card.classList.toggle('active', card.getAttribute('data-section') === section);
+    });
+  };
+
   // --- Articles ---
   function loadArticles() {
     var params = 'page=' + articlesPage + '&limit=20';
@@ -175,20 +199,20 @@
     api('GET', 'articles?' + params).then(function (data) {
       var tbody = document.querySelector('#articlesTable tbody');
       tbody.innerHTML = data.articles.map(function (a) {
-        var badge = a.published ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-warning">Draft</span>';
+        var statusBadge = a.published ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-warning">Draft</span>';
         var featBadge = a.featured ? ' <span class="badge badge-info">Featured</span>' : '';
         return '<tr>' +
-          '<td><strong>' + escapeHtml(a.title).substring(0, 50) + '</strong></td>' +
+          '<td><strong style="color:var(--text-primary)">' + escapeHtml(a.title).substring(0, 50) + '</strong></td>' +
           '<td>' + escapeHtml(a.author) + '</td>' +
-          '<td style="text-transform:capitalize">' + escapeHtml(a.section) + '</td>' +
-          '<td>' + badge + featBadge + '</td>' +
+          '<td>' + sectionBadge(a.section) + '</td>' +
+          '<td>' + statusBadge + featBadge + '</td>' +
           '<td>' + formatDate(a.created_at) + '</td>' +
           '<td style="white-space:nowrap">' +
           '<button class="btn btn-outline btn-sm" onclick="editArticle(' + a.id + ')" style="margin-right:4px">Edit</button>' +
           '<button class="btn btn-success btn-sm" onclick="viewArticle(\'' + escapeHtml(a.slug) + '\')" style="margin-right:4px">View</button>' +
           '<button class="btn btn-danger btn-sm" onclick="deleteArticle(' + a.id + ')">Delete</button>' +
           '</td></tr>';
-      }).join('') || '<tr><td colspan="6" style="color:var(--admin-text-light)">No articles found. Click "+ New Article" to create one.</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="color:var(--text-muted);text-align:center;padding:40px 16px;">No articles found. Click <strong>"+ New Article"</strong> above to create one.</td></tr>';
 
       renderPagination('articlesPagination', data.total, data.page, data.limit, function (p) {
         articlesPage = p;
@@ -218,19 +242,23 @@
       document.getElementById('articleTitleInput').value = article.title;
       document.getElementById('articleSubtitle').value = article.subtitle || '';
       document.getElementById('articleAuthor').value = article.author;
-      document.getElementById('articleSection').value = article.section;
       document.getElementById('articleLabel').value = article.label || '';
       document.getElementById('articleImage').value = article.image_url || '';
       document.getElementById('articleExcerpt').value = article.excerpt || '';
       editor.innerHTML = article.body || '';
       document.getElementById('articleFeatured').checked = !!article.featured;
       document.getElementById('articlePublished').checked = !!article.published;
+      // Activate category card
+      window.selectSection(article.section || '');
     } else {
       document.getElementById('articleId').value = '';
       document.getElementById('articleForm').reset();
+      document.getElementById('articleSection').value = '';
       editor.innerHTML = '';
       document.getElementById('articleFeatured').checked = false;
       document.getElementById('articlePublished').checked = false;
+      // Clear all category cards
+      document.querySelectorAll('#categoryGrid .category-card').forEach(function (c) { c.classList.remove('active'); });
     }
 
     // Update live counters
@@ -463,9 +491,9 @@
           '<img src="' + escapeHtml(img.url) + '" alt="' + escapeHtml(img.original_name) + '" loading="lazy">' +
           '<div class="image-overlay">' +
           '<button onclick="copyImageUrl(\'' + escapeHtml(img.url) + '\')">Copy URL</button>' +
-          '<button onclick="deleteImage(' + img.id + ')" style="color:var(--admin-danger)">Delete</button>' +
+          '<button onclick="deleteImage(' + img.id + ')" style="color:var(--danger)">Delete</button>' +
           '</div></div>';
-      }).join('') || '<p style="color:var(--admin-text-light);text-align:center;padding:40px;">No images uploaded yet. Drag and drop or click to upload.</p>';
+      }).join('') || '<p style="color:var(--text-muted);text-align:center;padding:40px;">No images uploaded yet. Drag and drop or click to upload.</p>';
 
       renderPagination('imagesPagination', data.total, data.page, data.limit, function (p) {
         imagesPage = p;
@@ -517,7 +545,7 @@
         return '<div class="image-item" onclick="selectImage(\'' + escapeHtml(img.url) + '\')">' +
           '<img src="' + escapeHtml(img.url) + '" alt="' + escapeHtml(img.original_name) + '" loading="lazy">' +
           '</div>';
-      }).join('') || '<p style="color:var(--admin-text-light);text-align:center">No images. Upload one above.</p>';
+      }).join('') || '<p style="color:var(--text-muted);text-align:center">No images. Upload one above.</p>';
     });
   };
 
@@ -546,7 +574,7 @@
           '<td><span class="badge badge-success">' + escapeHtml(p.status) + '</span></td>' +
           '<td>' + formatDate(p.created_at) + '</td>' +
           '</tr>';
-      }).join('') || '<tr><td colspan="5" style="color:var(--admin-text-light)">No payments yet</td></tr>';
+      }).join('') || '<tr><td colspan="5" style="color:var(--text-muted)">No payments yet</td></tr>';
 
       renderPagination('paymentsPagination', data.total, data.page, data.limit, function (p) {
         paymentsPage = p;

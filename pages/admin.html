@@ -201,47 +201,85 @@
               </div>
             </div>
 
-            <!-- SECTION 3: Author & Metadata -->
+            <!-- SECTION 3: Category / Section -->
             <div class="editor-section">
               <div class="editor-section-header">
                 <span class="editor-section-number">3</span>
                 <div>
-                  <h3>Author &amp; Classification</h3>
-                  <p>Who wrote it and where it belongs</p>
+                  <h3>Category <span class="required">*</span></h3>
+                  <p>Which section does this article belong to? Select one.</p>
                 </div>
               </div>
               <div class="editor-section-body">
-                <div class="form-row form-row-3">
+                <input type="hidden" id="articleSection" value="">
+                <div class="category-grid" id="categoryGrid">
+                  <button type="button" class="category-card" data-section="faith" onclick="selectSection('faith')">
+                    <span class="category-icon">&#9768;</span>
+                    <span class="category-name">Faith</span>
+                    <span class="category-desc">Belief, devotion, spiritual life</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="politics" onclick="selectSection('politics')">
+                    <span class="category-icon">&#9878;</span>
+                    <span class="category-name">Politics</span>
+                    <span class="category-desc">Government, policy, elections</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="culture" onclick="selectSection('culture')">
+                    <span class="category-icon">&#127912;</span>
+                    <span class="category-name">Culture</span>
+                    <span class="category-desc">Arts, media, society, trends</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="world" onclick="selectSection('world')">
+                    <span class="category-icon">&#127758;</span>
+                    <span class="category-name">World</span>
+                    <span class="category-desc">International news, global events</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="opinion" onclick="selectSection('opinion')">
+                    <span class="category-icon">&#128172;</span>
+                    <span class="category-name">Opinion</span>
+                    <span class="category-desc">Editorials, commentary, voices</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="theology" onclick="selectSection('theology')">
+                    <span class="category-icon">&#128214;</span>
+                    <span class="category-name">Theology</span>
+                    <span class="category-desc">Doctrine, scripture, teaching</span>
+                  </button>
+                  <button type="button" class="category-card" data-section="church" onclick="selectSection('church')">
+                    <span class="category-icon">&#9962;</span>
+                    <span class="category-name">Church</span>
+                    <span class="category-desc">Congregations, ministry, pastors</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 4: Author & Label -->
+            <div class="editor-section">
+              <div class="editor-section-header">
+                <span class="editor-section-number">4</span>
+                <div>
+                  <h3>Author &amp; Label</h3>
+                  <p>Who wrote it and how to tag it</p>
+                </div>
+              </div>
+              <div class="editor-section-body">
+                <div class="form-row">
                   <div class="form-group">
                     <label for="articleAuthor">Author Name <span class="required">*</span></label>
                     <input type="text" id="articleAuthor" placeholder="Full name" required>
                   </div>
                   <div class="form-group">
-                    <label for="articleSection">Section <span class="required">*</span></label>
-                    <select id="articleSection" required>
-                      <option value="">Select section...</option>
-                      <option value="faith">Faith</option>
-                      <option value="politics">Politics</option>
-                      <option value="culture">Culture</option>
-                      <option value="world">World</option>
-                      <option value="opinion">Opinion</option>
-                      <option value="theology">Theology</option>
-                      <option value="church">Church</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
                     <label for="articleLabel">Label / Tag</label>
                     <input type="text" id="articleLabel" placeholder="e.g. Breaking, Revival, Exclusive">
-                    <div class="input-hint">Appears as the colored tag above the title</div>
+                    <div class="input-hint">Appears as the colored tag above the title on the front end</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- SECTION 4: Excerpt -->
+            <!-- SECTION 5: Excerpt -->
             <div class="editor-section">
               <div class="editor-section-header">
-                <span class="editor-section-number">4</span>
+                <span class="editor-section-number">5</span>
                 <div>
                   <h3>Excerpt</h3>
                   <p>Short summary shown in article cards and listings</p>
@@ -256,10 +294,10 @@
               </div>
             </div>
 
-            <!-- SECTION 5: Article Body -->
+            <!-- SECTION 6: Article Body -->
             <div class="editor-section editor-section-wide">
               <div class="editor-section-header">
-                <span class="editor-section-number">5</span>
+                <span class="editor-section-number">6</span>
                 <div>
                   <h3>Article Body <span class="required">*</span></h3>
                   <p>The full content of the article</p>
@@ -318,10 +356,10 @@
               </div>
             </div>
 
-            <!-- SECTION 6: Publishing Options -->
+            <!-- SECTION 7: Publishing Options -->
             <div class="editor-section">
               <div class="editor-section-header">
-                <span class="editor-section-number">6</span>
+                <span class="editor-section-number">7</span>
                 <div>
                   <h3>Publishing</h3>
                   <p>Control visibility and prominence</p>
