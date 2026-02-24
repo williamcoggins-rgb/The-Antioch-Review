@@ -323,6 +323,14 @@
         var input = form.querySelector("input[type='email']");
         if (!input || !input.value) return;
 
+        // Send email to backend API
+        var emailValue = input.value;
+        fetch("/api/subscribers", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailValue, source: "newsletter" })
+        }).catch(function () { /* fail silently for animation */ });
+
         var btn = form.querySelector("button");
         var originalText = btn.textContent;
         var originalWidth = btn.offsetWidth;

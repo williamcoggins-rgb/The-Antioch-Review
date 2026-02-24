@@ -18,3 +18,15 @@ Thumbs.db
 .env
 .env.local
 .env.production
+
+# Database
+db/*.db
+db/*.db-wal
+db/*.db-shm
+
+# Uploaded files
+uploads/*
+!uploads/.gitkeep
+
+# Package lock (no npm deps)
+package-lock.json

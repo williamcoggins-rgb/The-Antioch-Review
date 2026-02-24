@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — The Antioch Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <!-- ========== LOGIN SCREEN ========== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>The Antioch Review</h1>
+      <p class="login-tagline">Editor Dashboard</p>
+      <div class="login-error" id="loginError"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:0.9375rem;margin-top:8px;">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN DASHBOARD ========== -->
+  <div class="admin-layout" id="adminLayout" style="display:none;">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-logo">
+        <h2>The Antioch Review</h2>
+        <span>Editor Panel</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="#dashboard" class="active" data-page="dashboard"><span class="nav-icon">&#9632;</span> Dashboard</a></li>
+        <li><a href="#subscribers" data-page="subscribers"><span class="nav-icon">&#9993;</span> Subscribers</a></li>
+        <li><a href="#articles" data-page="articles"><span class="nav-icon">&#9998;</span> Articles</a></li>
+        <li><a href="#images" data-page="images"><span class="nav-icon">&#128247;</span> Images</a></li>
+        <li><a href="#payments" data-page="payments"><span class="nav-icon">&#128179;</span> Payments</a></li>
+        <li><a href="#settings" data-page="settings"><span class="nav-icon">&#9881;</span> Settings</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <a href="../index.html">&#8592; View Site</a>
+        <span style="float:right;"><a href="#" id="logoutBtn">Sign Out</a></span>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD PAGE -->
+      <div class="admin-page" id="page-dashboard">
+        <div class="admin-header">
+          <h1>Dashboard</h1>
+          <span id="adminUser"></span>
+        </div>
+        <div class="stat-grid" id="statsGrid">
+          <div class="stat-card"><div class="stat-icon">&#9993;</div><div class="stat-label">Subscribers</div><div class="stat-value" id="statSubscribers">-</div></div>
+          <div class="stat-card"><div class="stat-icon">&#9998;</div><div class="stat-label">Articles</div><div class="stat-value" id="statArticles">-</div></div>
+          <div class="stat-card"><div class="stat-icon">&#128196;</div><div class="stat-label">Published</div><div class="stat-value" id="statPublished">-</div></div>
+          <div class="stat-card"><div class="stat-icon">&#128247;</div><div class="stat-label">Images</div><div class="stat-value" id="statImages">-</div></div>
+          <div class="stat-card"><div class="stat-icon">&#128179;</div><div class="stat-label">Payments</div><div class="stat-value" id="statPayments">-</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="panel">
+            <div class="panel-header"><h2>Recent Subscribers</h2></div>
+            <div class="panel-body"><table class="data-table" id="recentSubscribers"><thead><tr><th>Email</th><th>Date</th></tr></thead><tbody></tbody></table></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h2>Recent Articles</h2></div>
+            <div class="panel-body"><table class="data-table" id="recentArticles"><thead><tr><th>Title</th><th>Section</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBSCRIBERS PAGE -->
+      <div class="admin-page" id="page-subscribers" style="display:none;">
+        <div class="admin-header">
+          <h1>Subscribers</h1>
+          <div style="display:flex;gap:8px;">
+            <a href="/api/subscribers/export" class="btn btn-outline" target="_blank">&#8615; Export CSV</a>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-body">
+            <div class="search-bar">
+              <input type="text" placeholder="Search by email or name..." id="subscriberSearch">
+              <button class="btn btn-primary" onclick="loadSubscribers()">Search</button>
+            </div>
+            <table class="data-table" id="subscribersTable">
+              <thead><tr><th>Email</th><th>Name</th><th>Source</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="pagination" id="subscribersPagination"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTICLES PAGE -->
+      <div class="admin-page" id="page-articles" style="display:none;">
+        <div class="admin-header">
+          <h1>Articles</h1>
+          <button class="btn btn-primary" onclick="showArticleForm()">+ New Article</button>
+        </div>
+
+        <!-- Article Form (hidden by default) -->
+        <div class="panel" id="articleFormPanel" style="display:none;">
+          <div class="panel-header">
+            <h2 id="articleFormTitle">New Article</h2>
+            <button class="btn btn-outline btn-sm" onclick="hideArticleForm()">Cancel</button>
+          </div>
+          <div class="panel-body">
+            <form id="articleForm">
+              <input type="hidden" id="articleId">
+              <div class="form-group">
+                <label for="articleTitleInput">Title</label>
+                <input type="text" id="articleTitleInput" placeholder="Article title" required>
+              </div>
+              <div class="form-group">
+                <label for="articleSubtitle">Subtitle</label>
+                <input type="text" id="articleSubtitle" placeholder="Optional subtitle">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="articleAuthor">Author</label>
+                  <input type="text" id="articleAuthor" placeholder="Author name" required>
+                </div>
+                <div class="form-group">
+                  <label for="articleSection">Section</label>
+                  <select id="articleSection" required>
+                    <option value="">Select section...</option>
+                    <option value="faith">Faith</option>
+                    <option value="politics">Politics</option>
+                    <option value="culture">Culture</option>
+                    <option value="world">World</option>
+                    <option value="opinion">Opinion</option>
+                    <option value="theology">Theology</option>
+                    <option value="church">Church</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="articleLabel">Label</label>
+                  <input type="text" id="articleLabel" placeholder="e.g. Faith, Breaking, Exclusive">
+                </div>
+                <div class="form-group">
+                  <label for="articleImage">Featured Image URL</label>
+                  <div style="display:flex;gap:8px;">
+                    <input type="text" id="articleImage" placeholder="/uploads/image.jpg or URL" style="flex:1">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="openImagePicker('articleImage')">Browse</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="articleExcerpt">Excerpt</label>
+                <input type="text" id="articleExcerpt" placeholder="Brief description for listings">
+              </div>
+              <div class="form-group">
+                <label for="articleBody">Article Body</label>
+                <textarea id="articleBody" placeholder="Write your article here... HTML is supported." required></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label><input type="checkbox" id="articleFeatured"> Featured article</label>
+                </div>
+                <div class="form-group">
+                  <label><input type="checkbox" id="articlePublished"> Published</label>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Article</button>
+                <button type="button" class="btn btn-outline" onclick="hideArticleForm()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Articles List -->
+        <div class="panel" id="articlesListPanel">
+          <div class="panel-body">
+            <div class="filter-tabs" id="sectionFilter">
+              <button class="active" data-section="">All</button>
+              <button data-section="faith">Faith</button>
+              <button data-section="politics">Politics</button>
+              <button data-section="culture">Culture</button>
+              <button data-section="world">World</button>
+              <button data-section="opinion">Opinion</button>
+              <button data-section="theology">Theology</button>
+              <button data-section="church">Church</button>
+            </div>
+            <table class="data-table" id="articlesTable">
+              <thead><tr><th>Title</th><th>Author</th><th>Section</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="pagination" id="articlesPagination"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMAGES PAGE -->
+      <div class="admin-page" id="page-images" style="display:none;">
+        <div class="admin-header">
+          <h1>Image Library</h1>
+        </div>
+        <div class="panel">
+          <div class="panel-body">
+            <div class="upload-zone" id="uploadZone">
+              <div class="upload-icon">&#128247;</div>
+              <p>Drag and drop images here, or</p>
+              <span class="upload-btn">click to browse</span>
+              <input type="file" id="imageFileInput" style="display:none" multiple accept="image/*">
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+            <div class="pagination" id="imagesPagination"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENTS PAGE -->
+      <div class="admin-page" id="page-payments" style="display:none;">
+        <div class="admin-header">
+          <h1>Payments</h1>
+        </div>
+        <div class="panel">
+          <div class="panel-body">
+            <table class="data-table" id="paymentsTable">
+              <thead><tr><th>Email</th><th>Plan</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="pagination" id="paymentsPagination"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE -->
+      <div class="admin-page" id="page-settings" style="display:none;">
+        <div class="admin-header">
+          <h1>Settings</h1>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h2>Change Password</h2></div>
+          <div class="panel-body">
+            <form id="passwordForm">
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" placeholder="Minimum 6 characters" required minlength="6">
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Update Password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><h2>Square Payment Configuration</h2></div>
+          <div class="panel-body">
+            <p style="color:var(--admin-text-light);font-size:0.875rem;margin-bottom:16px;">
+              Set these environment variables on your server to enable live payments:
+            </p>
+            <div style="background:#f9fafb;padding:16px;border-radius:6px;font-family:monospace;font-size:0.8125rem;line-height:2;">
+              SQUARE_ACCESS_TOKEN=your_access_token<br>
+              SQUARE_LOCATION_ID=your_location_id<br>
+              SQUARE_APP_ID=your_application_id<br>
+              SQUARE_ENV=sandbox <span style="color:var(--admin-text-light)"># or production</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Image Picker Modal -->
+  <div class="modal-overlay" id="imagePickerModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Select Image</h3>
+        <button class="modal-close" onclick="closeImagePicker()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="upload-zone" id="modalUploadZone" style="padding:20px;">
+          <p>Upload new image</p>
+          <input type="file" id="modalFileInput" style="display:none" accept="image/*">
+        </div>
+        <div class="image-grid" id="modalImageGrid" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>

@@ -294,6 +294,178 @@
     </div>
   </footer>
 
+  <!-- Payment Modal -->
+  <div id="paymentModal" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);justify-content:center;align-items:center;">
+    <div style="background:white;border-radius:12px;padding:32px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative;">
+      <button onclick="closePaymentModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#666;">&times;</button>
+      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;margin-bottom:4px;" id="paymentPlanName">Subscribe</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:0.9375rem;" id="paymentPlanPrice"></p>
+
+      <form id="paymentForm">
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;font-size:0.8125rem;margin-bottom:6px;">Email Address</label>
+          <input type="email" id="paymentEmail" required placeholder="your@email.com" style="width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:6px;font-size:0.9375rem;font-family:inherit;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;font-size:0.8125rem;margin-bottom:6px;">Full Name</label>
+          <input type="text" id="paymentName" required placeholder="John Smith" style="width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:6px;font-size:0.9375rem;font-family:inherit;">
+        </div>
+
+        <!-- Square Card Element -->
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;font-size:0.8125rem;margin-bottom:6px;">Card Details</label>
+          <div id="card-container" style="min-height:50px;border:1px solid #e5e7eb;border-radius:6px;padding:12px;"></div>
+        </div>
+
+        <div id="paymentError" style="display:none;background:#fef2f2;color:#ef4444;padding:10px 14px;border-radius:6px;font-size:0.8125rem;margin-bottom:16px;"></div>
+        <div id="paymentSuccess" style="display:none;background:#ecfdf5;color:#059669;padding:14px;border-radius:6px;font-size:0.9375rem;text-align:center;margin-bottom:16px;font-weight:600;"></div>
+
+        <button type="submit" id="paymentSubmitBtn" style="width:100%;padding:14px;background:#c49b2a;color:white;border:none;border-radius:50px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;">
+          Subscribe Now
+        </button>
+      </form>
+    </div>
+  </div>
+
   <script src="../js/main.js"></script>
+  <script>
+  (function() {
+    var selectedPlan = '';
+    var squareCard = null;
+    var squarePayments = null;
+
+    // Plan data
+    var plans = {
+      digital: { name: 'Digital', price: '$8/mo', amount: 800 },
+      premium: { name: 'Premium', price: '$14/mo', amount: 1400 },
+      patron: { name: 'Patron', price: '$30/mo', amount: 3000 }
+    };
+
+    // Attach click handlers to pricing buttons
+    document.querySelectorAll('.btn-pricing').forEach(function(btn, i) {
+      var planKeys = ['digital', 'premium', 'patron'];
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openPaymentModal(planKeys[i]);
+      });
+    });
+
+    function openPaymentModal(planKey) {
+      selectedPlan = planKey;
+      var plan = plans[planKey];
+      document.getElementById('paymentPlanName').textContent = plan.name + ' Subscription';
+      document.getElementById('paymentPlanPrice').textContent = plan.price + ' — Billed monthly';
+      document.getElementById('paymentError').style.display = 'none';
+      document.getElementById('paymentSuccess').style.display = 'none';
+      document.getElementById('paymentSubmitBtn').disabled = false;
+      document.getElementById('paymentSubmitBtn').textContent = 'Subscribe Now';
+      document.getElementById('paymentModal').style.display = 'flex';
+      initSquareCard();
+    }
+
+    window.closePaymentModal = function() {
+      document.getElementById('paymentModal').style.display = 'none';
+    };
+
+    // Initialize Square Web Payments SDK
+    async function initSquareCard() {
+      var container = document.getElementById('card-container');
+      container.innerHTML = '';
+
+      try {
+        // Fetch Square config from our API
+        var configRes = await fetch('/api/payments/config');
+        var config = await configRes.json();
+
+        if (!config.appId || config.appId === 'sandbox-sq0idb-DEMO') {
+          // Demo mode — show a demo card form
+          container.innerHTML = '<div style="padding:8px;color:#6b7280;font-size:0.875rem;text-align:center;">' +
+            '<p style="margin-bottom:8px;">&#128274; Demo mode — Square not configured</p>' +
+            '<p style="font-size:0.75rem;">Payment will be recorded. Configure Square environment variables for live processing.</p></div>';
+          return;
+        }
+
+        // Load Square SDK if not already loaded
+        if (!window.Square) {
+          var script = document.createElement('script');
+          script.src = config.environment === 'production'
+            ? 'https://web.squarecdn.com/v1/square.js'
+            : 'https://sandbox.web.squarecdn.com/v1/square.js';
+          script.onload = function() { initSquarePayments(config); };
+          document.head.appendChild(script);
+        } else {
+          initSquarePayments(config);
+        }
+      } catch (e) {
+        container.innerHTML = '<p style="color:#ef4444;font-size:0.8125rem;">Could not load payment form. Please try again.</p>';
+      }
+    }
+
+    async function initSquarePayments(config) {
+      try {
+        squarePayments = window.Square.payments(config.appId, config.locationId);
+        squareCard = await squarePayments.card();
+        await squareCard.attach('#card-container');
+      } catch (e) {
+        document.getElementById('card-container').innerHTML = '<p style="color:#ef4444;font-size:0.8125rem;">Error loading card form.</p>';
+      }
+    }
+
+    // Handle payment form submit
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var email = document.getElementById('paymentEmail').value;
+      var name = document.getElementById('paymentName').value;
+      var errorEl = document.getElementById('paymentError');
+      var successEl = document.getElementById('paymentSuccess');
+      var submitBtn = document.getElementById('paymentSubmitBtn');
+
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+
+      try {
+        var sourceId = 'demo-nonce';
+
+        // If Square card is initialized, tokenize it
+        if (squareCard) {
+          var result = await squareCard.tokenize();
+          if (result.status !== 'OK') {
+            throw new Error('Please check your card details and try again.');
+          }
+          sourceId = result.token;
+        }
+
+        // Send to our API
+        var res = await fetch('/api/payments/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sourceId: sourceId,
+            email: email,
+            name: name,
+            plan: selectedPlan
+          })
+        });
+
+        var data = await res.json();
+        if (data.error) throw new Error(data.error);
+
+        successEl.textContent = 'Welcome to The Antioch Review! Your ' + plans[selectedPlan].name + ' subscription is active.';
+        successEl.style.display = 'block';
+        submitBtn.textContent = 'Subscribed!';
+        submitBtn.style.background = '#10b981';
+
+        setTimeout(function() { window.closePaymentModal(); }, 3000);
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Subscribe Now';
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
