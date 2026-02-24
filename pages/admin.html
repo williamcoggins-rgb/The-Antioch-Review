@@ -6,7 +6,7 @@
   <title>Admin — The Antioch Review</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
           <label for="loginPassword">Password</label>
           <input type="password" id="loginPassword" placeholder="Enter password" required>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:0.9375rem;margin-top:8px;">Sign In</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;">Sign In</button>
       </form>
     </div>
   </div>
@@ -50,7 +50,7 @@
       </ul>
       <div class="sidebar-bottom">
         <a href="../index.html">&#8592; View Site</a>
-        <span style="float:right;"><a href="#" id="logoutBtn">Sign Out</a></span>
+        <a href="#" id="logoutBtn">Sign Out</a>
       </div>
     </aside>
 
@@ -64,21 +64,51 @@
           <span id="adminUser"></span>
         </div>
         <div class="stat-grid" id="statsGrid">
-          <div class="stat-card"><div class="stat-icon">&#9993;</div><div class="stat-label">Subscribers</div><div class="stat-value" id="statSubscribers">-</div></div>
-          <div class="stat-card"><div class="stat-icon">&#9998;</div><div class="stat-label">Articles</div><div class="stat-value" id="statArticles">-</div></div>
-          <div class="stat-card"><div class="stat-icon">&#128196;</div><div class="stat-label">Published</div><div class="stat-value" id="statPublished">-</div></div>
-          <div class="stat-card"><div class="stat-icon">&#128247;</div><div class="stat-label">Images</div><div class="stat-value" id="statImages">-</div></div>
-          <div class="stat-card"><div class="stat-icon">&#128179;</div><div class="stat-label">Payments</div><div class="stat-value" id="statPayments">-</div></div>
+          <div class="stat-card">
+            <div class="stat-icon">&#9993;</div>
+            <div class="stat-label">Subscribers</div>
+            <div class="stat-value" id="statSubscribers">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">&#9998;</div>
+            <div class="stat-label">Articles</div>
+            <div class="stat-value" id="statArticles">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">&#128196;</div>
+            <div class="stat-label">Published</div>
+            <div class="stat-value" id="statPublished">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">&#128247;</div>
+            <div class="stat-label">Images</div>
+            <div class="stat-value" id="statImages">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">&#128179;</div>
+            <div class="stat-label">Payments</div>
+            <div class="stat-value" id="statPayments">-</div>
+          </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div class="dashboard-panels-grid">
           <div class="panel">
             <div class="panel-header"><h2>Recent Subscribers</h2></div>
-            <div class="panel-body"><table class="data-table" id="recentSubscribers"><thead><tr><th>Email</th><th>Date</th></tr></thead><tbody></tbody></table></div>
+            <div class="panel-body">
+              <table class="data-table" id="recentSubscribers">
+                <thead><tr><th>Email</th><th>Date</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
           <div class="panel">
             <div class="panel-header"><h2>Recent Articles</h2></div>
-            <div class="panel-body"><table class="data-table" id="recentArticles"><thead><tr><th>Title</th><th>Section</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+            <div class="panel-body">
+              <table class="data-table" id="recentArticles">
+                <thead><tr><th>Title</th><th>Section</th><th>Status</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -87,9 +117,7 @@
       <div class="admin-page" id="page-subscribers" style="display:none;">
         <div class="admin-header">
           <h1>Subscribers</h1>
-          <div style="display:flex;gap:8px;">
-            <a href="/api/subscribers/export" class="btn btn-outline" target="_blank">&#8615; Export CSV</a>
-          </div>
+          <a href="/api/subscribers/export" class="btn btn-outline" target="_blank">&#8615; Export CSV</a>
         </div>
         <div class="panel">
           <div class="panel-body">
@@ -157,14 +185,14 @@
                 <div class="image-upload-area">
                   <div class="image-preview" id="imagePreview">
                     <div class="image-preview-empty" id="imagePreviewEmpty">
-                      <div style="font-size:2.5rem;margin-bottom:8px;">&#128247;</div>
+                      <div style="font-size:2.5rem;margin-bottom:8px;opacity:0.5;">&#128247;</div>
                       <div>No image selected</div>
                       <div class="image-preview-hint">Upload or select from library</div>
                     </div>
                     <img id="imagePreviewImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
                   </div>
                   <div class="image-upload-controls">
-                    <input type="text" id="articleImage" placeholder="Image URL or upload..." style="flex:1">
+                    <input type="text" id="articleImage" placeholder="Image URL or upload...">
                     <button type="button" class="btn btn-outline" onclick="openImagePicker('articleImage')">Browse Library</button>
                     <button type="button" class="btn btn-outline" id="directUploadBtn">Upload New</button>
                     <input type="file" id="directImageUpload" style="display:none" accept="image/*">
@@ -324,7 +352,7 @@
             <!-- ACTION BAR -->
             <div class="editor-actions">
               <button type="button" class="btn btn-outline btn-lg" onclick="hideArticleForm()">Cancel</button>
-              <div style="display:flex;gap:8px;">
+              <div style="display:flex;gap:10px;">
                 <button type="button" class="btn btn-outline btn-lg" onclick="saveAsDraft()">Save as Draft</button>
                 <button type="submit" class="btn btn-primary btn-lg">Publish Article</button>
               </div>
@@ -416,14 +444,14 @@
         <div class="panel">
           <div class="panel-header"><h2>Square Payment Configuration</h2></div>
           <div class="panel-body">
-            <p style="color:var(--admin-text-light);font-size:0.875rem;margin-bottom:16px;">
+            <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:16px;">
               Set these environment variables on your server to enable live payments:
             </p>
-            <div style="background:#f9fafb;padding:16px;border-radius:6px;font-family:monospace;font-size:0.8125rem;line-height:2;">
+            <div class="settings-code-block">
               SQUARE_ACCESS_TOKEN=your_access_token<br>
               SQUARE_LOCATION_ID=your_location_id<br>
               SQUARE_APP_ID=your_application_id<br>
-              SQUARE_ENV=sandbox <span style="color:var(--admin-text-light)"># or production</span>
+              SQUARE_ENV=sandbox <span style="color:var(--text-muted)"># or production</span>
             </div>
           </div>
         </div>
@@ -440,7 +468,7 @@
         <button class="modal-close" onclick="closeImagePicker()">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="upload-zone" id="modalUploadZone" style="padding:20px;">
+        <div class="upload-zone" id="modalUploadZone" style="padding:24px;">
           <p>Upload new image</p>
           <input type="file" id="modalFileInput" style="display:none" accept="image/*">
         </div>
