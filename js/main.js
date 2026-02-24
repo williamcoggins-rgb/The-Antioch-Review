@@ -224,13 +224,11 @@
     var header = document.querySelector(".site-header");
     if (!header) return;
 
-    // Inject header transition styles
+    // Inject header transition styles — no transform to prevent jerking
     injectStyles("ar-header-styles", [
       ".site-header {",
-      "  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s, backdrop-filter 0.3s, background 0.3s;",
-      "}",
-      ".site-header.ar-header-hidden {",
-      "  transform: translateY(-100%);",
+      "  transition: box-shadow 0.3s, backdrop-filter 0.3s, background 0.3s;",
+      "  transform: none !important;",
       "}",
       ".site-header.ar-header-scrolled {",
       "  background: rgba(255,255,255,0.92);",
@@ -239,10 +237,6 @@
       "}",
       "body.dark-mode .site-header.ar-header-scrolled {",
       "  background: rgba(26,26,26,0.92);",
-      "}",
-      "@media (prefers-reduced-motion: reduce) {",
-      "  .site-header { transition: box-shadow 0.3s, background 0.3s; }",
-      "  .site-header.ar-header-hidden { transform: none; }",
       "}"
     ].join("\n"));
 
@@ -260,16 +254,6 @@
       } else {
         header.classList.remove("ar-header-scrolled");
         header.style.boxShadow = "none";
-      }
-
-      // Hide/show on scroll direction
-      if (!prefersReducedMotion && !isMobile()) {
-        var delta = currentY - lastScrollY;
-        if (delta > scrollThreshold && currentY > headerHeight) {
-          header.classList.add("ar-header-hidden");
-        } else if (delta < -scrollThreshold) {
-          header.classList.remove("ar-header-hidden");
-        }
       }
 
       lastScrollY = currentY;
@@ -1219,6 +1203,137 @@
   }
 
   /* ===========================================
+     Feature #15 — LOGO CHARACTER GLOW
+     Sequential golden glow through each header
+     character + full glow on section transitions.
+     =========================================== */
+  function initLogoGlow() {
+    var logoLink = document.querySelector(".site-logo h1 a");
+    if (!logoLink) return;
+
+    // Inject glow styles
+    injectStyles("ar-logo-glow-styles", [
+      ".ar-logo-char {",
+      "  display: inline-block;",
+      "  color: inherit;",
+      "  transition: color 0.6s ease, text-shadow 0.6s ease;",
+      "  will-change: color, text-shadow;",
+      "}",
+      ".ar-logo-char.ar-char-glow {",
+      "  color: #dbb44a;",
+      "  text-shadow:",
+      "    0 0 6px rgba(219, 180, 74, 0.6),",
+      "    0 0 18px rgba(219, 180, 74, 0.4),",
+      "    0 0 36px rgba(196, 155, 42, 0.25);",
+      "}",
+      ".ar-logo-char.ar-char-glow-all {",
+      "  color: #dbb44a;",
+      "  text-shadow:",
+      "    0 0 8px rgba(219, 180, 74, 0.7),",
+      "    0 0 22px rgba(219, 180, 74, 0.5),",
+      "    0 0 44px rgba(196, 155, 42, 0.3),",
+      "    0 0 66px rgba(196, 155, 42, 0.12);",
+      "  transition: color 0.3s ease, text-shadow 0.3s ease;",
+      "}",
+      "body.dark-mode .ar-logo-char.ar-char-glow {",
+      "  color: #e8c44a;",
+      "  text-shadow:",
+      "    0 0 8px rgba(232, 196, 74, 0.7),",
+      "    0 0 22px rgba(232, 196, 74, 0.45),",
+      "    0 0 40px rgba(196, 155, 42, 0.3);",
+      "}",
+      "body.dark-mode .ar-logo-char.ar-char-glow-all {",
+      "  color: #e8c44a;",
+      "  text-shadow:",
+      "    0 0 10px rgba(232, 196, 74, 0.8),",
+      "    0 0 28px rgba(232, 196, 74, 0.55),",
+      "    0 0 50px rgba(196, 155, 42, 0.35),",
+      "    0 0 75px rgba(196, 155, 42, 0.15);",
+      "}"
+    ].join("\n"));
+
+    // Split text into individual character spans
+    var text = logoLink.textContent;
+    var href = logoLink.getAttribute("href");
+    logoLink.textContent = "";
+    var charSpans = [];
+    for (var i = 0; i < text.length; i++) {
+      var span = document.createElement("span");
+      span.className = "ar-logo-char";
+      // Preserve spaces as non-breaking to prevent layout shift
+      span.textContent = text[i] === " " ? "\u00A0" : text[i];
+      logoLink.appendChild(span);
+      charSpans.push(span);
+    }
+
+    // Sequential glow — one character at a time, 10 seconds apart
+    var currentCharIndex = 0;
+    var glowDuration = 1500; // how long each character stays lit (ms)
+
+    function glowNextChar() {
+      // Remove glow from all chars first
+      for (var j = 0; j < charSpans.length; j++) {
+        charSpans[j].classList.remove("ar-char-glow");
+      }
+      // Skip spaces
+      var idx = currentCharIndex % charSpans.length;
+      if (charSpans[idx].textContent === "\u00A0") {
+        currentCharIndex++;
+        idx = currentCharIndex % charSpans.length;
+      }
+      charSpans[idx].classList.add("ar-char-glow");
+      // Remove after glowDuration
+      setTimeout(function () {
+        charSpans[idx].classList.remove("ar-char-glow");
+      }, glowDuration);
+      currentCharIndex++;
+    }
+
+    // Start the cycle — first glow after a short delay, then every 10s
+    setTimeout(function () {
+      glowNextChar();
+      setInterval(glowNextChar, 10000);
+    }, 2000);
+
+    // Section transition: glow ALL characters at once
+    var sectionGlowActive = false;
+    var sections = document.querySelectorAll("main > section, main > article");
+    if (sections.length > 0 && "IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        var anyEntering = false;
+        for (var k = 0; k < entries.length; k++) {
+          if (entries[k].isIntersecting) {
+            anyEntering = true;
+            break;
+          }
+        }
+        if (anyEntering && !sectionGlowActive) {
+          sectionGlowActive = true;
+          // Glow all characters
+          for (var m = 0; m < charSpans.length; m++) {
+            charSpans[m].classList.remove("ar-char-glow");
+            charSpans[m].classList.add("ar-char-glow-all");
+          }
+          // Remove full glow after 800ms
+          setTimeout(function () {
+            for (var n = 0; n < charSpans.length; n++) {
+              charSpans[n].classList.remove("ar-char-glow-all");
+            }
+            sectionGlowActive = false;
+          }, 800);
+        }
+      }, {
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0
+      });
+
+      for (var s = 0; s < sections.length; s++) {
+        observer.observe(sections[s]);
+      }
+    }
+  }
+
+  /* ===========================================
      INITIALIZE EVERYTHING
      =========================================== */
   document.addEventListener("DOMContentLoaded", function () {
@@ -1236,6 +1351,7 @@
 
     // --- Premium features ---
     initPageEntrance();        // Feature #12 — page entrance animation
+    initLogoGlow();            // Feature #15 — logo character glow
     initCardTilt();            // Feature #2 — 3D card tilt
     initMagneticButtons();     // Feature #3 — magnetic hover buttons
     initParallax();            // Feature #4 — parallax effects
