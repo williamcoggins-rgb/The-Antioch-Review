@@ -289,6 +289,50 @@ button {
   margin-top: -2px;
 }
 
+/* --- Glowing Golden Cross "T" --- */
+@keyframes cross-glow {
+  0%, 100% {
+    color: #c49b2a;
+    text-shadow:
+      0 0 4px rgba(196, 155, 42, 0.4),
+      0 0 11px rgba(196, 155, 42, 0.25),
+      0 0 20px rgba(196, 155, 42, 0.15);
+  }
+  50% {
+    color: #dbb44a;
+    text-shadow:
+      0 0 6px rgba(219, 180, 74, 0.6),
+      0 0 18px rgba(219, 180, 74, 0.4),
+      0 0 36px rgba(196, 155, 42, 0.25),
+      0 0 55px rgba(196, 155, 42, 0.1);
+  }
+}
+
+.logo-cross {
+  display: inline-block;
+  font-weight: 900;
+  color: #c49b2a;
+  text-shadow:
+    0 0 4px rgba(196, 155, 42, 0.4),
+    0 0 11px rgba(196, 155, 42, 0.25),
+    0 0 20px rgba(196, 155, 42, 0.15);
+  animation: cross-glow 3s ease-in-out infinite;
+}
+
+/* Footer brand cross — slightly subtler */
+.footer-brand .logo-cross {
+  animation: cross-glow 4s ease-in-out infinite;
+}
+
+/* Dark mode — brighter glow against dark bg */
+body.dark-mode .logo-cross {
+  color: #dbb44a;
+  text-shadow:
+    0 0 6px rgba(219, 180, 74, 0.5),
+    0 0 16px rgba(219, 180, 74, 0.35),
+    0 0 30px rgba(196, 155, 42, 0.2);
+}
+
 .header-right {
   display: flex;
   align-items: center;
