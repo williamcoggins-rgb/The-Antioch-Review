@@ -406,24 +406,81 @@
           </form>
         </div>
 
-        <!-- Articles List -->
-        <div class="panel" id="articlesListPanel">
-          <div class="panel-body">
-            <div class="filter-tabs" id="sectionFilter">
-              <button class="active" data-section="">All</button>
-              <button data-section="faith">Faith</button>
-              <button data-section="politics">Politics</button>
-              <button data-section="culture">Culture</button>
-              <button data-section="world">World</button>
-              <button data-section="opinion">Opinion</button>
-              <button data-section="theology">Theology</button>
-              <button data-section="church">Church</button>
+        <!-- Section Overview Grid -->
+        <div id="articlesListPanel">
+          <div class="section-overview-grid" id="sectionOverview">
+            <div class="section-overview-card" data-section="faith" onclick="filterBySection('faith')">
+              <div class="section-overview-icon" style="background:rgba(201,162,39,0.12);color:#e4c65a;">&#9768;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Faith</div>
+                <div class="section-overview-count" id="countFaith">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('faith')" title="New Faith article">+</button>
             </div>
-            <table class="data-table" id="articlesTable">
-              <thead><tr><th>Title</th><th>Author</th><th>Section</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-            <div class="pagination" id="articlesPagination"></div>
+            <div class="section-overview-card" data-section="politics" onclick="filterBySection('politics')">
+              <div class="section-overview-icon" style="background:rgba(239,68,68,0.12);color:#fca5a5;">&#9878;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Politics</div>
+                <div class="section-overview-count" id="countPolitics">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('politics')" title="New Politics article">+</button>
+            </div>
+            <div class="section-overview-card" data-section="culture" onclick="filterBySection('culture')">
+              <div class="section-overview-icon" style="background:rgba(168,85,247,0.12);color:#c4b5fd;">&#127912;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Culture</div>
+                <div class="section-overview-count" id="countCulture">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('culture')" title="New Culture article">+</button>
+            </div>
+            <div class="section-overview-card" data-section="world" onclick="filterBySection('world')">
+              <div class="section-overview-icon" style="background:rgba(59,130,246,0.12);color:#93c5fd;">&#127758;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">World</div>
+                <div class="section-overview-count" id="countWorld">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('world')" title="New World article">+</button>
+            </div>
+            <div class="section-overview-card" data-section="opinion" onclick="filterBySection('opinion')">
+              <div class="section-overview-icon" style="background:rgba(245,158,11,0.12);color:#fcd34d;">&#128172;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Opinion</div>
+                <div class="section-overview-count" id="countOpinion">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('opinion')" title="New Opinion article">+</button>
+            </div>
+            <div class="section-overview-card" data-section="theology" onclick="filterBySection('theology')">
+              <div class="section-overview-icon" style="background:rgba(16,185,129,0.12);color:#6ee7b7;">&#128214;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Theology</div>
+                <div class="section-overview-count" id="countTheology">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('theology')" title="New Theology article">+</button>
+            </div>
+            <div class="section-overview-card" data-section="church" onclick="filterBySection('church')">
+              <div class="section-overview-icon" style="background:rgba(236,72,153,0.12);color:#f9a8d4;">&#9962;</div>
+              <div class="section-overview-info">
+                <div class="section-overview-name">Church</div>
+                <div class="section-overview-count" id="countChurch">0 articles</div>
+              </div>
+              <button type="button" class="section-overview-add" onclick="event.stopPropagation();createForSection('church')" title="New Church article">+</button>
+            </div>
+          </div>
+
+          <!-- Filter label -->
+          <div class="articles-filter-bar" id="articlesFilterBar">
+            <div class="filter-active-label" id="filterLabel">Showing: <strong>All Articles</strong></div>
+            <button class="btn btn-outline btn-sm" id="clearFilterBtn" style="display:none;" onclick="filterBySection('')">Show All</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-body">
+              <table class="data-table" id="articlesTable">
+                <thead><tr><th>Title</th><th>Author</th><th>Section</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody></tbody>
+              </table>
+              <div class="pagination" id="articlesPagination"></div>
+            </div>
           </div>
         </div>
       </div>

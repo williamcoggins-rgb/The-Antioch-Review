@@ -192,6 +192,37 @@
     });
   };
 
+  // --- Filter by section from overview cards ---
+  window.filterBySection = function (section) {
+    articlesSection = section;
+    articlesPage = 1;
+
+    // Highlight active card
+    document.querySelectorAll('.section-overview-card').forEach(function (c) {
+      c.classList.toggle('active-filter', c.getAttribute('data-section') === section);
+    });
+
+    // Update filter label
+    var label = document.getElementById('filterLabel');
+    var clearBtn = document.getElementById('clearFilterBtn');
+    if (section) {
+      label.innerHTML = 'Showing: <strong>' + section.charAt(0).toUpperCase() + section.slice(1) + '</strong> articles';
+      clearBtn.style.display = '';
+    } else {
+      label.innerHTML = 'Showing: <strong>All Articles</strong>';
+      clearBtn.style.display = 'none';
+      document.querySelectorAll('.section-overview-card').forEach(function (c) { c.classList.remove('active-filter'); });
+    }
+
+    loadArticles();
+  };
+
+  // --- Create article pre-filled with a section ---
+  window.createForSection = function (section) {
+    window.showArticleForm();
+    window.selectSection(section);
+  };
+
   // --- Articles ---
   function loadArticles() {
     var params = 'page=' + articlesPage + '&limit=20';
@@ -212,13 +243,35 @@
           '<button class="btn btn-success btn-sm" onclick="viewArticle(\'' + escapeHtml(a.slug) + '\')" style="margin-right:4px">View</button>' +
           '<button class="btn btn-danger btn-sm" onclick="deleteArticle(' + a.id + ')">Delete</button>' +
           '</td></tr>';
-      }).join('') || '<tr><td colspan="6" style="color:var(--text-muted);text-align:center;padding:40px 16px;">No articles found. Click <strong>"+ New Article"</strong> above to create one.</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="color:var(--text-muted);text-align:center;padding:40px 16px;">No articles found. Click <strong>"+ New Article"</strong> or the <strong>+</strong> button on a category above to create one.</td></tr>';
 
       renderPagination('articlesPagination', data.total, data.page, data.limit, function (p) {
         articlesPage = p;
         loadArticles();
       });
     });
+
+    // Load section counts for overview cards
+    loadSectionCounts();
+  }
+
+  function loadSectionCounts() {
+    var sections = ['faith', 'politics', 'culture', 'world', 'opinion', 'theology', 'church'];
+    // Fetch all articles to count by section
+    api('GET', 'articles?limit=1000').then(function (data) {
+      var counts = {};
+      sections.forEach(function (s) { counts[s] = 0; });
+      (data.articles || []).forEach(function (a) {
+        if (counts[a.section] !== undefined) counts[a.section]++;
+      });
+      sections.forEach(function (s) {
+        var el = document.getElementById('count' + s.charAt(0).toUpperCase() + s.slice(1));
+        if (el) {
+          var n = counts[s];
+          el.textContent = n + ' article' + (n !== 1 ? 's' : '');
+        }
+      });
+    }).catch(function () {});
   }
 
   window.viewArticle = function (slug) {
@@ -642,16 +695,7 @@
       saveArticle(data).catch(function (err) { toast(err.message, 'error'); });
     });
 
-    // Section filter tabs
-    document.querySelectorAll('#sectionFilter button').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        document.querySelectorAll('#sectionFilter button').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        articlesSection = btn.getAttribute('data-section');
-        articlesPage = 1;
-        loadArticles();
-      });
-    });
+    // Section filter tabs (handled by filterBySection / overview cards)
 
     // Live title counter
     document.getElementById('articleTitleInput').addEventListener('input', updateTitleCounter);

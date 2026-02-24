@@ -585,6 +585,115 @@ body {
   color: var(--text-primary);
 }
 
+/* Section Overview Grid (Articles page) */
+.section-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-overview-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  position: relative;
+}
+
+.section-overview-card:hover {
+  border-color: var(--border-light);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-overview-card.active-filter {
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(201, 162, 39, 0.1);
+}
+
+.section-overview-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.section-overview-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-overview-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.section-overview-count {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.section-overview-add {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s var(--ease);
+  flex-shrink: 0;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.section-overview-add:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--text-inverse);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.3);
+}
+
+.articles-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-active-label {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.filter-active-label strong {
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
 .panel-header {
   display: flex;
   align-items: center;
