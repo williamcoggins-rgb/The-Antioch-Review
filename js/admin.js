@@ -72,7 +72,7 @@
 
   function showAdmin() {
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminLayout').style.display = 'grid';
+    document.getElementById('adminLayout').style.display = 'block';
     document.getElementById('adminUser').textContent = 'Welcome, ' + currentUser.username;
     loadDashboard();
   }

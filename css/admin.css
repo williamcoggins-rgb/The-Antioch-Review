@@ -104,8 +104,6 @@ body {
 
 /* --- Layout --- */
 .admin-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
   min-height: 100vh;
 }
 
@@ -1002,7 +1000,7 @@ body {
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .admin-layout {
-    grid-template-columns: 1fr;
+    display: block;
   }
 
   .admin-sidebar {
