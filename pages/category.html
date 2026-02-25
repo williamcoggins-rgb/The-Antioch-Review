@@ -78,100 +78,21 @@
         <div class="category-layout">
           <!-- Main article list -->
           <div class="category-main">
-            <div class="article-list">
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Revival</span>
-                  <h3><a href="article.html">Revival Breaks Out at University of Kentucky as Students Pack Chapel Services</a></h3>
-                  <p>Thousands of students have gathered for continuous worship services now entering their second week on campus. University officials say it began spontaneously during a routine chapel service and has since drawn national attention.</p>
-                  <div class="story-meta">By <span class="author">Sarah Mitchell</span> &middot; February 23, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#9769;</div></div>
-              </article>
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Missions</span>
-                  <h3><a href="article.html">Underground Churches in China Report Record Growth Despite Crackdowns</a></h3>
-                  <p>New estimates suggest the persecuted church has doubled in size over the past decade, with house church networks spreading rapidly through rural provinces and increasingly into major cities.</p>
-                  <div class="story-meta">By <span class="author">Grace Chen</span> &middot; February 22, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#127758;</div></div>
-              </article>
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Discipleship</span>
-                  <h3><a href="article.html">The Surprising Return of Small Group Bible Studies Among Gen Z</a></h3>
-                  <p>After years of declining church attendance among young adults, a counter-trend is emerging: intimate, Scripture-focused gatherings in living rooms and coffee shops across the country.</p>
-                  <div class="story-meta">By <span class="author">Emily Hart</span> &middot; February 21, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#128214;</div></div>
-              </article>
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Prayer</span>
-                  <h3><a href="article.html">National Day of Prayer Draws Record Participation in 2026</a></h3>
-                  <p>Organizers report over 50,000 events held in all 50 states, with a particular surge in prayer gatherings at state capitols and public schools.</p>
-                  <div class="story-meta">By <span class="author">David Harmon</span> &middot; February 20, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#128591;</div></div>
-              </article>
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Testimony</span>
-                  <h3><a href="article.html">Former Atheist Philosopher Shares Story of Conversion to Christianity</a></h3>
-                  <p>Dr. Hannah Cole, once one of the most vocal critics of organized religion in academia, has published a memoir detailing her unexpected journey to faith in Christ.</p>
-                  <div class="story-meta">By <span class="author">James Whitfield</span> &middot; February 19, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#9998;</div></div>
-              </article>
-
-              <article class="article-list-item">
-                <div>
-                  <span class="label">Worship</span>
-                  <h3><a href="article.html">How Ancient Hymns Are Making a Comeback in Modern Worship</a></h3>
-                  <p>Churches across denominations are rediscovering the theological richness of hymns written centuries ago, blending them with contemporary arrangements.</p>
-                  <div class="story-meta">By <span class="author">Rachel Torres</span> &middot; February 18, 2026</div>
-                </div>
-                <div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#9835;</div></div>
-              </article>
-
+            <div class="article-list" id="articleList">
+              <!-- Articles loaded from API -->
+              <div class="empty-state" id="categoryEmptyState" style="text-align:center;padding:60px 20px;color:#888;">
+                <div style="font-size:2.5rem;margin-bottom:12px;">&#128240;</div>
+                <p style="font-size:1.125rem;margin-bottom:4px;">Loading articles...</p>
+              </div>
             </div>
           </div>
 
           <!-- Sidebar -->
           <aside class="category-sidebar">
             <div class="sidebar-widget">
-              <h3>Most Read in Faith</h3>
-              <ol class="most-read-list">
-                <li class="most-read-item">
-                  <div>
-                    <h4><a href="article.html">Revival Breaks Out at University of Kentucky</a></h4>
-                    <div class="story-meta">Sarah Mitchell</div>
-                  </div>
-                </li>
-                <li class="most-read-item">
-                  <div>
-                    <h4><a href="article.html">Underground Churches in China Report Record Growth</a></h4>
-                    <div class="story-meta">Grace Chen</div>
-                  </div>
-                </li>
-                <li class="most-read-item">
-                  <div>
-                    <h4><a href="article.html">Gen Z's Surprising Return to Bible Studies</a></h4>
-                    <div class="story-meta">Emily Hart</div>
-                  </div>
-                </li>
-                <li class="most-read-item">
-                  <div>
-                    <h4><a href="article.html">Former Atheist Philosopher's Conversion Story</a></h4>
-                    <div class="story-meta">James Whitfield</div>
-                  </div>
-                </li>
+              <h3 id="mostReadTitle">Most Read</h3>
+              <ol class="most-read-list" id="mostReadList">
+                <li class="most-read-item"><div><div class="story-meta" style="color:#aaa;">Loading...</div></div></li>
               </ol>
             </div>
 
@@ -273,6 +194,12 @@
         });
       }
 
+      // Update Most Read title
+      if (cat && categories[cat]) {
+        var mrTitle = document.getElementById('mostReadTitle');
+        if (mrTitle) mrTitle.textContent = 'Most Read in ' + categories[cat].title;
+      }
+
       // Load articles from API
       if (!cat) return;
       function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -286,10 +213,19 @@
         .then(function(r) { return r.json(); })
         .then(function(data) {
           var articles = data.articles || [];
-          if (!articles.length) return; // Keep static placeholders
+          var listEl = document.getElementById('articleList');
+
+          if (!articles.length) {
+            if (listEl) {
+              listEl.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#888;">' +
+                '<div style="font-size:2.5rem;margin-bottom:12px;">&#128240;</div>' +
+                '<p style="font-size:1.125rem;margin-bottom:4px;">No articles yet in this section.</p>' +
+                '<p style="font-size:0.875rem;color:#aaa;">Articles published by the editor will appear here.</p></div>';
+            }
+            return;
+          }
 
           // Render main article list
-          var listEl = document.querySelector('.article-list');
           if (listEl) {
             listEl.innerHTML = articles.map(function(a) {
               var thumb = a.image_url
@@ -297,7 +233,7 @@
                 : '<div class="thumb"><div class="image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e9e5df,#d5d0c8);color:#999;font-size:2rem;">&#9769;</div></div>';
               return '<article class="article-list-item"><div>' +
                 '<span class="label">' + esc(a.label || a.section) + '</span>' +
-                '<h3><a href="/article/' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h3>' +
+                '<h3><a href="article.html?slug=' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h3>' +
                 '<p>' + esc(a.excerpt || a.subtitle || '') + '</p>' +
                 '<div class="story-meta">By <span class="author">' + esc(a.author) + '</span> &middot; ' + fmtDate(a.created_at) + '</div>' +
                 '</div>' + thumb + '</article>';
@@ -305,14 +241,22 @@
           }
 
           // Render most-read sidebar
-          var mostRead = document.querySelector('.sidebar-widget .most-read-list');
-          if (mostRead && articles.length >= 2) {
+          var mostRead = document.getElementById('mostReadList');
+          if (mostRead && articles.length >= 1) {
             mostRead.innerHTML = articles.slice(0, 4).map(function(a) {
-              return '<li class="most-read-item"><div><h4><a href="/article/' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h4>' +
+              return '<li class="most-read-item"><div><h4><a href="article.html?slug=' + encodeURIComponent(a.slug) + '">' + esc(a.title) + '</a></h4>' +
                 '<div class="story-meta">' + esc(a.author) + '</div></div></li>';
             }).join('');
           }
-        }).catch(function() { /* Keep static placeholders */ });
+        }).catch(function(err) {
+          console.log('Article API unavailable:', err.message);
+          var listEl = document.getElementById('articleList');
+          if (listEl) {
+            listEl.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#888;">' +
+              '<div style="font-size:2.5rem;margin-bottom:12px;">&#9888;</div>' +
+              '<p style="font-size:1.125rem;">Unable to load articles. Please try again later.</p></div>';
+          }
+        });
     })();
   </script>
 </body>

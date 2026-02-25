@@ -344,7 +344,7 @@
         var d = new Date(s.indexOf('Z') === -1 ? s + 'Z' : s);
         return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       }
-      function link(slug) { return '/article/' + encodeURIComponent(slug); }
+      function link(slug) { return 'pages/article.html?slug=' + encodeURIComponent(slug); }
 
       function cardImg(a) {
         return a.image_url
